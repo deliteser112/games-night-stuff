@@ -76,7 +76,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       <Box sx={{ px: 2.5, py: 3, display: 'inline-flex', alignItems: 'center' }}>
         <Logo />
         <Typography variant="h5" sx={{ marginLeft: 1 }}>
-          Meteor Starter Kit
+          GamesNight
         </Typography>
       </Box>
 

@@ -22,8 +22,8 @@ const RootStyle = styled(m.div)(({ theme }) => ({
     height: '100vh',
     display: 'flex',
     position: 'fixed',
-    alignItems: 'center',
-  },
+    alignItems: 'center'
+  }
 }));
 
 const ContentStyle = styled((props) => <Stack spacing={5} {...props} />)(({ theme }) => ({
@@ -33,11 +33,7 @@ const ContentStyle = styled((props) => <Stack spacing={5} {...props} />)(({ them
   textAlign: 'center',
   position: 'relative',
   paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(15),
-  [theme.breakpoints.up('md')]: {
-    margin: 'unset',
-    textAlign: 'left',
-  },
+  paddingBottom: theme.spacing(15)
 }));
 
 const HeroOverlayStyle = styled(m.img)({
@@ -45,23 +41,8 @@ const HeroOverlayStyle = styled(m.img)({
   width: '100%',
   height: '100%',
   objectFit: 'cover',
-  position: 'absolute',
+  position: 'absolute'
 });
-
-const HeroImgStyle = styled(m.img)(({ theme }) => ({
-  top: 0,
-  right: 0,
-  bottom: 0,
-  zIndex: 8,
-  width: '100%',
-  margin: 'auto',
-  position: 'absolute',
-  [theme.breakpoints.up('lg')]: {
-    right: '8%',
-    width: 'auto',
-    height: '75vh',
-  },
-}));
 
 // ----------------------------------------------------------------------
 
@@ -69,26 +50,23 @@ export default function HomeHero() {
   return (
     <Box>
       <RootStyle>
-        <HeroOverlayStyle alt="overlay" src="/static/home/overlay.svg" variants={varFade().in} />
-
-        <HeroImgStyle alt="hero" src="/static/home/hero.png" variants={varFade().inUp} />
-
+        <HeroOverlayStyle alt="overlay" src="/static/home/bg-hero.png" variants={varFade().in} />
         <Container>
           <ContentStyle>
             <m.div variants={varFade().inRight}>
-              <Typography variant="h1" sx={{ color: 'common.white' }}>
-                Start a <br />
-                new project <br /> with
+              <Typography variant="h1" sx={{ color: 'common.white', fontWeight: 900, letterSpacing: 3.2 }}>
+                Welcome, to the <br />
                 <Typography component="span" variant="h1" sx={{ color: 'primary.main' }}>
-                  &nbsp;Meteor Starter Kit
+                  GamesNight
                 </Typography>
               </Typography>
             </m.div>
 
             <m.div variants={varFade().inRight}>
               <Typography sx={{ color: 'common.white' }}>
-                The starting point for your next project based on easy-to-customize this template
-                helps you build apps faster and better.
+                It keeps a record of all the games in your growing collection. Tracks who you have lent them to.
+                Connects you with the people and the games you are itching to play. It even helps you choose your next
+                game. All this, from any device you like.
               </Typography>
             </m.div>
 
@@ -98,9 +76,9 @@ export default function HomeHero() {
                 variant="contained"
                 component={RouterLink}
                 to={PATH_DASHBOARD.root}
-                startIcon={<Iconify icon="eva:flash-fill" width={20} height={20} />}
+                endIcon={<Iconify icon="bi:box-arrow-in-up-right" width={20} height={20} />}
               >
-                Get Started
+                Join Now
               </Button>
             </m.div>
           </ContentStyle>

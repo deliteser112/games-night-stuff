@@ -5,6 +5,291 @@ import checkIfAuthorized, { isAdmin } from './checkIfAuthorized';
 
 let action;
 
+
+// //////////////////////////////////////////////////////////////
+
+
+const returnUsersGameLocal = (_id, boardGameId, userLoanedToo, returnDate) => {
+  const userToLoanTo = Meteor.users.findOne({ username: userLoanedToo });
+  const userToLoanFrom = Meteor.users.findOne(_id);
+
+  Meteor.users.update(
+    { _id: userToLoanTo._id },
+    {
+      $pull: {
+        borrowedFrom: {
+          _id: boardGameId,
+          userId: _id,
+          username: userToLoanFrom.username,
+        },
+      },
+      $addToSet: {
+        allTimeBorrowedFrom: {
+          _id: boardGameId,
+          userId: _id,
+          username: userToLoanFrom.username,
+          returnDate,
+        },
+      },
+    },
+  );
+
+  return Meteor.users.update(_id, {
+    $pull: {
+      loanedTo: {
+        _id: boardGameId,
+        userId: userToLoanTo._id,
+        username: userToLoanTo.username,
+      },
+    },
+    $addToSet: {
+      allTimeLoanedTo: {
+        _id: boardGameId,
+        userId: userToLoanTo._id,
+        username: userToLoanTo.username,
+        returnDate,
+      },
+    },
+  });
+};
+
+const lendGameOut = (_id, boardGameId, usernameToLoanTo) => {
+  const userToLoanTo = Meteor.users.findOne({ username: usernameToLoanTo });
+  const userToLoanFrom = Meteor.users.findOne(_id);
+
+  Meteor.users.update(
+    { _id: userToLoanTo._id },
+    {
+      $addToSet: {
+        borrowedFrom: {
+          _id: boardGameId,
+          userId: _id,
+          username: userToLoanFrom.username,
+        },
+        allTimeBorrowedFrom: {
+          _id: boardGameId,
+          userId: _id,
+          username: userToLoanFrom.username,
+        },
+      },
+    },
+  );
+
+  return Meteor.users.update(_id, {
+    $addToSet: {
+      loanedTo: {
+        _id: boardGameId,
+        userId: userToLoanTo._id,
+        username: userToLoanTo.username,
+      },
+      allTimeLoanedTo: {
+        _id: boardGameId,
+        userId: userToLoanTo._id,
+        username: userToLoanTo.username,
+      },
+    },
+  });
+};
+
+const removeFriendUser = (_id, friendUsername) => {
+  const friendUser = Meteor.users.findOne({ username: friendUsername });
+  const myUser = Meteor.users.findOne(_id);
+
+  Meteor.users.update(
+    { _id: friendUser._id },
+    {
+      $pull: {
+        friends: {
+          userId: _id,
+          username: myUser.username,
+        },
+      },
+    },
+  );
+
+  return Meteor.users.update(_id, {
+    $pull: {
+      friends: {
+        userId: friendUser._id,
+        username: friendUser.username,
+      },
+    },
+  });
+};
+
+const addFriendUser = (_id, friendEmail) => {
+  const friendUser = Meteor.users.findOne({ email: friendEmail });
+  const myUser = Meteor.users.findOne(_id);
+
+  Meteor.users.update(
+    { _id: friendUser._id },
+    {
+      $addToSet: {
+        friends: {
+          userId: _id,
+          username: myUser.username,
+        },
+      },
+    },
+  );
+
+  return Meteor.users.update(_id, {
+    $addToSet: {
+      friends: {
+        userId: friendUser._id,
+        username: friendUser.username,
+      },
+    },
+  });
+};
+
+const setUsersSubscriptionToFree = (_id) => {
+  try {
+    return Meteor.users.update(_id, {
+      $set: { subscription: 'free', subscriptionId: null },
+    });
+  } catch (exception) {
+    throw new Error(`[updateUser.setUsersSubscriptionToFree] ${exception.message}`);
+  }
+};
+
+const setUsersUsername = (_id, username, email) => {
+  try {
+    setUsersSubscriptionToFree(_id);
+
+    return Meteor.users.update(_id, {
+      $set: { username, email },
+    });
+  } catch (exception) {
+    throw new Error(`[updateUser.setUsersUsername] ${exception.message}`);
+  }
+};
+
+const cancelUserSubscription = (_id) => {
+  try {
+    //const stripe = Stripe(Meteor.settings.private.stripePrivateKey);
+    const user = Meteor.users.findOne(_id);
+
+    //stripe.subscriptions.del(user.subscriptionId);
+
+    return Meteor.users.update(_id, {
+      $set: {
+        subscription: 'free',
+        subscriptionId: null,
+      },
+    });
+  } catch (exception) {
+    throw new Error(`[updateUser.updateUserOwnlist] ${exception.message}`);
+  }
+};
+
+const incrementPlayCount = (_id, boardGameId) => {
+  Meteor.users.update(
+    {
+      _id,
+      'gamePlayCounts._id': boardGameId,
+    },
+    {
+      $inc: { 'gamePlayCounts.$.count': 1 },
+    },
+  );
+};
+
+const updateUserGamePlayCount = ({ _id }, boardGameId) => {
+  try {
+    const user = Meteor.users.findOne(_id);
+
+    const hasNotPlayedBefore = user.gamePlayCounts
+      ? user.gamePlayCounts.filter((gamePlayCount) => gamePlayCount._id === boardGameId).length ===
+        0
+      : true;
+
+    if (hasNotPlayedBefore) {
+      return Meteor.users.update(
+        _id,
+        {
+          $addToSet: {
+            gamePlayCounts: {
+              _id: boardGameId,
+              count: 0,
+            },
+          },
+        },
+        () => incrementPlayCount(_id, boardGameId),
+      );
+    }
+
+    return incrementPlayCount(_id, boardGameId);
+  } catch (exception) {
+    throw new Error(`[updateUser.updateUserOwnlist] ${exception.message}`);
+  }
+};
+
+const updateUserOwnlist = ({ _id }, boardGameId) => {
+  try {
+    return Meteor.users.update(_id, {
+      $addToSet: {
+        ownlist: boardGameId,
+      },
+      $pull: { wishlist: { $in: [boardGameId] } },
+    });
+  } catch (exception) {
+    throw new Error(`[updateUser.updateUserOwnlist] ${exception.message}`);
+  }
+};
+
+const removeGameFromOwnlist = ({ _id }, boardGameId) => {
+  try {
+    return Meteor.users.update(_id, {
+      $pull: { ownlist: { $in: [boardGameId] } },
+    });
+  } catch (exception) {
+    throw new Error(`[updateUser.removeGameFromOwnlist] ${exception.message}`);
+  }
+};
+
+const updateUserItchlist = ({ _id }, boardGameId) => {
+  try {
+    return Meteor.users.update(_id, {
+      $addToSet: { itchlist: boardGameId, allTimeItchlist: boardGameId },
+    });
+  } catch (exception) {
+    throw new Error(`[updateUser.updateUserItchlist] ${exception.message}`);
+  }
+};
+
+const removeGameFromItchlist = ({ _id }, boardGameId) => {
+  try {
+    return Meteor.users.update(_id, {
+      $pull: { itchlist: { $in: [boardGameId] } },
+    });
+  } catch (exception) {
+    throw new Error(`[updateUser.removeGameFromItchlist] ${exception.message}`);
+  }
+};
+
+const updateUserWishlist = ({ _id }, boardGameId) => {
+  try {
+    return Meteor.users.update(_id, {
+      $addToSet: { wishlist: boardGameId, allTimeWishlist: boardGameId },
+    });
+  } catch (exception) {
+    throw new Error(`[updateUser.updateUserWishlist] ${exception.message}`);
+  }
+};
+
+const removeGameFromWishlist = ({ _id }, boardGameId) => {
+  try {
+    return Meteor.users.update(_id, {
+      $pull: { wishlist: { $in: [boardGameId] } },
+    });
+  } catch (exception) {
+    throw new Error(`[updateUser.removeGameFromWishlist] ${exception.message}`);
+  }
+};
+
+
+// /////////////////////////////////////////////////////////////////////////
 const updateUserSettings = ({ _id, settings }) => {
   try {
     return Meteor.users.update(_id, {
@@ -97,3 +382,64 @@ export default (options) =>
     action = { resolve, reject };
     updateUser(options);
   });
+
+
+
+  // --------------------------- / ------------------/ ------------------
+
+  
+export function updateWishlist(options) {
+  updateUserWishlist(options.currentUser, options._id);
+}
+
+export function removeFromWishlist(options) {
+  removeGameFromWishlist(options.currentUser, options._id);
+}
+
+export function updateItchlist(options) {
+  updateUserItchlist(options.currentUser, options._id);
+}
+
+export function removeFromItchlist(options) {
+  removeGameFromItchlist(options.currentUser, options._id);
+}
+
+export function updateOwnlist(options) {
+  updateUserOwnlist(options.currentUser, options._id);
+}
+
+export function removeFromOwnlist(options) {
+  removeGameFromOwnlist(options.currentUser, options._id);
+}
+
+export function updateGamePlayCount(options) {
+  updateUserGamePlayCount(options.currentUser, options._id);
+}
+
+export function cancelSubscription(options) {
+  cancelUserSubscription(options.currentUser._id);
+}
+
+export function setSubscriptionToFree(_id) {
+  setUsersSubscriptionToFree(_id);
+}
+
+export function setUsername(_id, username, email) {
+  setUsersUsername(_id, username, email);
+}
+
+export function addFriend(_id, friendEmail) {
+  addFriendUser(_id, friendEmail);
+}
+
+export function removeFriend(_id, friendUsername) {
+  removeFriendUser(_id, friendUsername);
+}
+
+export function loanGameToUser(_id, boardGameId, usernameToLoanTo) {
+  lendGameOut(_id, boardGameId, usernameToLoanTo);
+}
+
+export function returnUsersGame(_id, boardGameId, usernameToLoanTo, returnDate) {
+  returnUsersGameLocal(_id, boardGameId, usernameToLoanTo, returnDate);
+}

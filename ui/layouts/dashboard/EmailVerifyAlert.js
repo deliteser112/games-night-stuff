@@ -25,7 +25,7 @@ const AlertbarStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 3),
   boxShadow: theme.customShadows.z8,
   // backgroundColor: 'green',
-  backgroundColor: `${alpha(theme.palette.error.lighter, 0.72)}`,
+  backgroundColor: `${alpha(theme.palette.primary.darker, 0.72)}`,
   [theme.breakpoints.up('md')]: {
     height: APPBAR_DESKTOP,
     padding: theme.spacing(0, 5),
@@ -84,7 +84,7 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
               color="primary"
               variant="body2"
               onClick={handleVerifyEmail}
-              sx={{ display: 'block', marginRight: 1, '&:hover': { cursor: 'pointer' } }}
+              sx={{ display: 'block', color: 'rgb(161 220 249)', marginRight: 1, '&:hover': { cursor: 'pointer' } }}
             >
               Send verification email
             </Link>

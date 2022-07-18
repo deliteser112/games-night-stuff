@@ -23,3 +23,81 @@ mutation sendWelcomeEmail {
     _id
   }
 }
+
+mutation addGameToWishlist($_id: String) {
+  addGameToWishlist(_id: $_id) {
+    _id
+  }
+}
+
+mutation removeGameFromWishlist($_id: String!) {
+  removeGameFromWishlist(_id: $_id) {
+    _id
+  }
+}
+
+mutation addGameToItchlist($_id: String) {
+  addGameToItchlist(_id: $_id) {
+    _id
+  }
+}
+
+mutation removeGameFromItchlist($_id: String!) {
+  removeGameFromItchlist(_id: $_id) {
+    _id
+  }
+}
+
+mutation addGameToOwnlist($_id: String) {
+  addGameToOwnlist(_id: $_id) {
+    _id
+  }
+}
+
+mutation removeGameFromOwnlist($_id: String!) {
+  removeGameFromOwnlist(_id: $_id) {
+    _id
+  }
+}
+
+mutation updateGamePlayCount($_id: String!) {
+  updateGamePlayCount(_id: $_id) {
+    _id
+  }
+}
+
+mutation cancelSubscription {
+  cancelSubscription {
+    _id
+  }
+}
+
+mutation setUsersUsername($username: String, $email: String) {
+  setUsersUsername(username: $username, email: $email) {
+    _id
+  }
+}
+
+mutation addFriend($friendEmail: String) {
+  addFriend(friendEmail: $friendEmail) {
+    _id
+  }
+}
+
+mutation removeFriend($friendUsername: String) {
+  removeFriend(friendUsername: $friendUsername) {
+    _id
+  }
+}
+
+mutation loanGameToUser($boardGameId: String, $usernameToLoanTo: String) {
+  loanGameToUser(boardGameId: $boardGameId, usernameToLoanTo: $usernameToLoanTo) {
+    _id
+  }
+}
+
+mutation returnUsersGame($boardGameId: String, $usernameToLoanTo: String, $returnDate: String) {
+  returnUsersGame(boardGameId: $boardGameId, usernameToLoanTo: $usernameToLoanTo, returnDate: $returnDate) {
+    _id
+  }
+}

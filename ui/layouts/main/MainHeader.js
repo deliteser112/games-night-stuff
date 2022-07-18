@@ -27,11 +27,11 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   height: HEADER.MOBILE_HEIGHT,
   transition: theme.transitions.create(['height', 'background-color'], {
     easing: theme.transitions.easing.easeInOut,
-    duration: theme.transitions.duration.shorter,
+    duration: theme.transitions.duration.shorter
   }),
   [theme.breakpoints.up('md')]: {
-    height: HEADER.MAIN_DESKTOP_HEIGHT,
-  },
+    height: HEADER.MAIN_DESKTOP_HEIGHT
+  }
 }));
 
 const ToolbarShadowStyle = styled('div')(({ theme }) => ({
@@ -44,7 +44,7 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
   borderRadius: '50%',
   position: 'absolute',
   width: `calc(100% - 48px)`,
-  boxShadow: theme.customShadows.z8,
+  boxShadow: theme.customShadows.z8
 }));
 
 // ----------------------------------------------------------------------
@@ -67,15 +67,15 @@ export default function MainHeader() {
         sx={{
           ...(isOffset && {
             ...cssStyles(theme).bgBlur(),
-            height: { md: HEADER.MAIN_DESKTOP_HEIGHT - 16 },
-          }),
+            height: { md: HEADER.MAIN_DESKTOP_HEIGHT - 16 }
+          })
         }}
       >
         <Container
           sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'space-between'
           }}
         >
           <Logo />
@@ -83,12 +83,10 @@ export default function MainHeader() {
           <Typography
             variant="subtitle1"
             sx={{
-              ml: 1,
-              ...(isOffset && { color: 'common.black' }),
-              ...(!isHome && { color: 'common.black' }),
+              ml: 1
             }}
           >
-            Meteor Starter Kit
+            GamesNight
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
 

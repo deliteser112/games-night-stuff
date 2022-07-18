@@ -1,0 +1,10 @@
+query ratingByUserIdAndGameId($gameId: String) {
+  ratingByUserIdAndGameId(gameId: $gameId) {
+    _id
+    gameId
+    playedBefore
+    playAgain
+    recomendToFriend
+    buyThisGame
+  }
+}

@@ -1,0 +1,5 @@
+mutation addRating($gameId: String!, $playedBefore: Boolean!, $playAgain: Int!, $recomendToFriend: Int!, $buyThisGame: Int!) {
+  addRating(gameId: $gameId, playedBefore: $playedBefore, playAgain: $playAgain, recomendToFriend: $recomendToFriend, buyThisGame: $buyThisGame) {
+    _id
+  }
+}

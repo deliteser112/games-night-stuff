@@ -22,6 +22,10 @@ import Page404 from '../pages/other/Page404';
 import Documents from '../pages/dashboard/document';
 import DocumentCreate from '../pages/dashboard/document/DocumentCreate';
 
+// games
+import Games from '../pages/dashboard/games';
+import GameDetails from '../pages/dashboard/games/GameDetails';
+
 // users
 import User from '../pages/dashboard/user';
 import UserProfile from '../pages/dashboard/user-profile';
@@ -58,6 +62,10 @@ export default function Router() {
         { path: 'documents', element: <Documents /> },
         { path: 'documents/create', element: <DocumentCreate /> },
         { path: 'documents/:documentId/edit', element: <DocumentCreate /> },
+
+        // games
+        { path: 'games', element: <Games /> },
+        { path: 'games/:gameId', element: <GameDetails /> },
 
         // Admin/users
         {

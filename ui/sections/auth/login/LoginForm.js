@@ -78,6 +78,11 @@ export default function LoginForm() {
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
+            sx={{
+              '&.MuiOutlinedInput-input': {
+                // boxShadow: '0 0 0 100px #161c24 inset'
+              }
+            }}
           />
 
           <TextField

@@ -71,30 +71,6 @@ export default function HomePricingPlans() {
             </Grid>
           ))}
         </Grid>
-
-        <m.div variants={varFade().in}>
-          <Box sx={{ p: 5, mt: 10, textAlign: 'center' }}>
-            <m.div variants={varFade().inDown}>
-              <Typography variant="h3">Still have questions?</Typography>
-            </m.div>
-
-            <m.div variants={varFade().inDown}>
-              <Typography sx={{ mt: 3, mb: 5, color: 'text.secondary' }}>
-                Please describe your case to receive the most accurate advice.
-              </Typography>
-            </m.div>
-
-            <m.div variants={varFade().inUp}>
-              <Button
-                size="large"
-                variant="contained"
-                href="mailto:support@meteor.starter.kit?subject=[Feedback] from Customer"
-              >
-                Contact us
-              </Button>
-            </m.div>
-          </Box>
-        </m.div>
       </Container>
     </RootStyle>
   );

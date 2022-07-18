@@ -1,6 +1,21 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import updateUser from './actions/updateUser';
+import updateUser, {
+  updateWishlist,
+  removeFromWishlist,
+  updateItchlist,
+  removeFromItchlist,
+  updateOwnlist,
+  removeFromOwnlist,
+  updateGamePlayCount,
+  cancelSubscription,
+  setSubscriptionToFree,
+  setUsername,
+  addFriend,
+  removeFriend,
+  loanGameToUser,
+  returnUsersGame,
+} from './actions/updateUser';
 import queryUser from './actions/queryUser';
 import removeUser from './actions/removeUser';
 import sendWelcomeEmail from './actions/sendWelcomeEmail';
@@ -34,5 +49,103 @@ export default {
     return {
       _id: context.user._id
     };
+  },
+
+  // game mutation
+  addGameToWishlist: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to add a game to your wishlist');
+   
+    console.log('Here is add function');
+
+    updateWishlist({ currentUser: context.user, _id: args._id });
+
+    return queryUser({ userIdToQuery: context.user._id });
+  },
+  removeGameFromWishlist: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to remove a game from your wishlist');
+
+    console.log('Here is remove function');
+    removeFromWishlist({ currentUser: context.user, _id: args._id });
+
+    return queryUser({ userIdToQuery: context.user._id });
+  },
+  addGameToItchlist: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to add a game to your ownlist');
+
+    console.log('here is itch add function')
+    updateItchlist({ currentUser: context.user, _id: args._id });
+
+    return queryUser({ userIdToQuery: context.user._id });
+  },
+  removeGameFromItchlist: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to remove a game from your itchlist');
+    console.log('here is itch remove function')
+
+    removeFromItchlist({ currentUser: context.user, _id: args._id });
+
+    return queryUser({ userIdToQuery: context.user._id });
+  },
+  addGameToOwnlist: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to add a game to your itchlist');
+
+    updateOwnlist({ currentUser: context.user, _id: args._id });
+
+    return queryUser({ userIdToQuery: context.user._id });
+  },
+  removeGameFromOwnlist: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to remove a game from your ownlist');
+
+    removeFromOwnlist({ currentUser: context.user, _id: args._id });
+
+    return queryUser({ userIdToQuery: context.user._id });
+  },
+  updateGamePlayCount: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to remove a game from your ownlist');
+
+    updateGamePlayCount({ currentUser: context.user, _id: args._id });
+
+    return queryUser({ userIdToQuery: context.user._id });
+  },
+  cancelSubscription: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to unsubscribe a game from your ownlist');
+
+    cancelSubscription({ currentUser: context.user });
+
+    return queryUser({ userIdToQuery: context.user._id });
+  },
+  setUsersUsername: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to unsubscribe a game from your ownlist');
+
+    setUsername(context.user._id, args.username, args.email);
+
+    return queryUser({ userIdToQuery: context.user._id });
+  },
+  addFriend: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to add friends');
+
+    addFriend(context.user._id, args.friendEmail);
+
+    return queryUser({ userIdToQuery: context.user._id });
+  },
+  removeFriend: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to remove friends');
+
+    removeFriend(context.user._id, args.friendUsername);
+
+    return queryUser({ userIdToQuery: context.user._id });
+  },
+  loanGameToUser: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to loan a game');
+
+    loanGameToUser(context.user._id, args.boardGameId, args.usernameToLoanTo);
+
+    return queryUser({ userIdToQuery: context.user._id });
+  },
+  returnUsersGame: async (root, args, context) => {
+    if (!context.user) throw new Error('Sorry, you must be logged in to return a game');
+
+    returnUsersGame(context.user._id, args.boardGameId, args.usernameToLoanTo, args.returnDate);
+
+    return queryUser({ userIdToQuery: context.user._id });
   }
 };

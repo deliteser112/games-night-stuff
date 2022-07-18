@@ -14,9 +14,32 @@ query users {
         name
         inRole
       }
+      username
       emailAddress
       emailVerified
       oAuthProvider
+      wishlist
+      itchlist
+      ownlist
+      subscription
+      friends {
+        userId
+        username
+      }
+      loanedTo {
+        _id
+        userId
+        username
+      }
+      borrowedFrom {
+        _id
+        userId
+        username
+      }
+      gamePlayCounts {
+        _id
+        count
+      }
     }
   }
 }
@@ -24,8 +47,62 @@ query users {
 query user($_id: String) {
   user(_id: $_id) {
     ...UserAttributes
+    username
+    wishlist
+    itchlist
+    ownlist
+    subscription
+    friends {
+      userId
+      username
+    }
+    loanedTo {
+      _id
+      userId
+      username
+    }
+    borrowedFrom {
+      _id
+      userId
+      username
+    }
+    gamePlayCounts {
+      _id
+      count
+    }
   }
 }
+
+
+query userFromUsername($username: String) {
+  userFromUsername(username: $username) {
+    ...UserAttributes,
+      username
+      wishlist
+      itchlist
+      ownlist
+      subscription
+      friends {
+        userId
+        username
+      }
+      loanedTo {
+        _id
+        userId
+        username
+      }
+      borrowedFrom {
+        _id
+        userId
+        username
+      }
+      gamePlayCounts {
+        _id
+        count
+      }
+  }
+}
+
 
 query userSettings {
   user {

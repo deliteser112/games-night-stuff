@@ -15,6 +15,28 @@ export default `
     inRole: Boolean
   }
 
+  type GamePlayCount {
+    _id: String
+    count: Float
+  }
+
+  type Friends {
+    userId: String
+    username: String
+  }
+  
+  type LoanedTo {
+    _id: String
+    userId: String
+    username: String
+  }
+
+  type BorrowedFrom {
+    _id: String
+    userId: String
+    username: String
+  }
+
   input ProfileInput {
     name: NameInput
   }
@@ -36,6 +58,15 @@ export default `
     emailVerified: Boolean
     oAuthProvider: String
     roles: [Role]
+    itchlist: [String]
+    wishlist: [String]
+    ownlist: [String]
+    friends: [Friends]
+    subscription: String
+    subscriptionId: String
+    gamePlayCounts: [GamePlayCount],
+    loanedTo: [LoanedTo]
+    borrowedFrom: [BorrowedFrom]
     settings: [UserSetting] # From /api/UserSettings/types.js
   }
 

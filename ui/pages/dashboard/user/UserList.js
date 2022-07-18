@@ -179,7 +179,7 @@ export default function UserList({ userList, onDelete }) {
                         <Stack direction="row" alignItems="center" spacing={2}>
                           <Avatar
                             {...stringAvatar(`${name.first} ${name.last}`)}
-                            style={{ marginRight: 8 }}
+                            style={{ color: 'white' }}
                           />
                           <Typography variant="subtitle2" noWrap>
                             {`${name.first} ${name.last ? name.last : ''}`}

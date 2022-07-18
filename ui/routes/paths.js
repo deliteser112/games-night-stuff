@@ -43,6 +43,27 @@ export const PATH_DASHBOARD = {
   documents: path(ROOTS_DASHBOARD, '/documents'),
   documentCreate: path(ROOTS_DASHBOARD, '/documents/create'),
 
+  // games
+  games: path(ROOTS_DASHBOARD, '/games'),
+
+  // itchlist
+  itchlist: path(ROOTS_DASHBOARD, '/itchlist'),
+
+  // wishlist
+  wishlist: path(ROOTS_DASHBOARD, '/wishlist'),
+
+  // ownlist
+  ownlist: path(ROOTS_DASHBOARD, '/ownlist'),
+
+  // lending
+  lending: {
+    root: path(ROOTS_DASHBOARD, '/lending'),
+    // loaned
+    loaned: path(ROOTS_DASHBOARD, '/lending/loaned'),
+    // borrowed
+    borrowed: path(ROOTS_DASHBOARD, '/lending/borrowed'),
+  },
+
   // users
   users: path(ROOTS_DASHBOARD, '/users'),
 

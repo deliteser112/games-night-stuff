@@ -17,6 +17,23 @@ import CommentTypes from '../../api/Comments/types';
 import CommentQueries from '../../api/Comments/queries';
 import CommentMutations from '../../api/Comments/mutations';
 
+// Games
+
+import GameTypes from '../../api/Games/types';
+import GameQueries from '../../api/Games/queries';
+
+import RatingTypes from '../../api/Ratings/types';
+import RatingQueries from '../../api/Ratings/queries';
+import RatingMutations from '../../api/Ratings/mutations';
+
+import WishesTypes from '../../api/Wishes/types';
+import WishesQueries from '../../api/Wishes/queries';
+import WishesMutations from '../../api/Wishes/mutations';
+
+import SubscribersTypes from '../../api/Subscribers/types';
+import SubscribersQueries from '../../api/Subscribers/queries';
+import SubscribersMutations from '../../api/Subscribers/mutations';
+
 import OAuthQueries from '../../api/OAuth/queries';
 
 import '../../api/Documents/server/indexes';
@@ -26,17 +43,38 @@ import '../../api/App/server/publications';
 
 const schema = {
   typeDefs: gql`
-    ${UserTypes}
+    ${GameTypes}
+    ${RatingTypes}
+    ${WishesTypes}
+    ${SubscribersTypes}
+
     ${DocumentTypes}
     ${CommentTypes}
+
+    ${UserTypes}
     ${UserSettingsTypes}
 
     type Query {
       documents: [Document]
       document(_id: String): Document
+
+      games: [Game]
+      totalGamesCount: Int
+      paginateGames(skip: Int, limit: Int): [Game]
+      game(_id: String): Game
+      findGameByKeywords(keywords: String): [Game]
+
+      ratings: [Rating]
+      wishes: [Wish]
+      Subscribers: [Subscriber]
+      rating(_id: String): Rating
+      ratingByUserIdAndGameId(gameId: String): Rating
+
       user(_id: String): User
       users(currentPage: Int, perPage: Int, search: String): Users
+      userFromUsername(username: String): User
       userSettings: [UserSetting]
+      
       exportUserData: UserDataExport
       oAuthServices(services: [String]): [String]
     }
@@ -47,6 +85,36 @@ const schema = {
       removeDocument(_id: String!): Document
       addComment(documentId: String!, comment: String!): Comment
       removeComment(commentId: String!): Comment
+
+      # games
+
+      addGameToWishlist(_id: String): User
+      removeGameFromWishlist(_id: String): User
+      addGameToItchlist(_id: String): User
+      removeGameFromItchlist(_id: String): User
+      addGameToOwnlist(_id: String): User
+      removeGameFromOwnlist(_id: String): User
+      updateGamePlayCount(_id: String): User
+      addRating(
+        gameId: String
+        playedBefore: Boolean
+        playAgain: Int
+        recomendToFriend: Int
+        buyThisGame: Int
+      ): Rating
+      addWish(wish: String): Wish
+      addSubscriber(
+        name: String
+        email: String
+      ): Subscriber
+
+      cancelSubscription: User
+      setUsersUsername(username: String, email: String): User
+      addFriend(friendEmail: String): User
+      removeFriend(friendUsername: String): User
+      loanGameToUser(boardGameId: String, usernameToLoanTo: String): User
+      returnUsersGame(boardGameId: String, usernameToLoanTo: String, returnDate: String): User
+
       updateUser(user: UserInput): User
       removeUser(_id: String): User
       addUserSetting(setting: UserSettingInput): UserSetting
@@ -63,6 +131,12 @@ const schema = {
   resolvers: {
     Query: {
       ...DocumentQueries,
+
+      ...GameQueries,
+      ...RatingQueries,
+      ...WishesQueries,
+      ...SubscribersQueries,
+
       ...UserQueries,
       ...UserSettingsQueries,
       ...OAuthQueries,
@@ -70,6 +144,11 @@ const schema = {
     Mutation: {
       ...DocumentMutations,
       ...CommentMutations,
+
+      ...RatingMutations,
+      ...WishesMutations,
+      ...SubscribersMutations,
+
       ...UserMutations,
       ...UserSettingsMutations,
     },

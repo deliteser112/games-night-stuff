@@ -1,0 +1,100 @@
+query games {
+  games {
+    _id
+    bggid
+    title
+    minPlayers
+    maxPlayers
+    playingTime
+    minPlaytime
+    maxPlaytime
+    age
+    description
+    thumbnail
+    image
+    yearPublished
+  }
+}
+
+query findGameByKeywords($keywords: String) {
+  findGameByKeywords(keywords: $keywords) {
+    _id
+    bggid
+    title
+    minPlayers
+    maxPlayers
+    playingTime
+    minPlaytime
+    maxPlaytime
+    age
+    description
+    thumbnail
+    image
+    yearPublished
+  }
+}
+
+query paginateGames($limit: Int, $skip: Int) {
+  paginateGames(limit: $limit, skip: $skip) {
+    _id
+    bggid
+    title
+    minPlayers
+    maxPlayers
+    playingTime
+    minPlaytime
+    maxPlaytime
+    age
+    description
+    thumbnail
+    image
+    yearPublished
+  }
+}
+
+query totalGamesCount {
+  totalGamesCount
+}
+
+query game($_id: String) {
+  game(_id: $_id) {
+    _id
+    bggid
+    title
+    minPlayers
+    maxPlayers
+    playingTime
+    minPlaytime
+    maxPlaytime
+    age
+    description
+    thumbnail
+    image
+    yearPublished
+    gameMechanics {
+      _id
+      id
+      mechanic
+    }
+    gameCategories {
+      _id
+      id
+      category
+    }
+    gameDesigners {
+      _id
+      id
+      designer
+    }
+    gameArtists {
+      _id
+      id
+      name
+    }
+    gamePublishers {
+      _id
+      id
+      publisher
+    }
+  }
+}

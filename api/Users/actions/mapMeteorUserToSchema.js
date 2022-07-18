@@ -42,6 +42,16 @@ export default (options) => {
       oAuthProvider:
         normalizedMeteorUserData.service !== 'password' ? normalizedMeteorUserData.service : null,
       settings: normalizedMeteorUserData.settings,
+      
+      username: normalizedMeteorUserData.username,
+      wishlist: normalizedMeteorUserData.wishlist,
+      itchlist: normalizedMeteorUserData.itchlist,
+      ownlist: normalizedMeteorUserData.ownlist,
+      friends: normalizedMeteorUserData.friends,
+      loanedTo: normalizedMeteorUserData.loanedTo,
+      borrowedFrom: normalizedMeteorUserData.borrowedFrom,
+      subscription: normalizedMeteorUserData.subscription,
+      gamePlayCounts: normalizedMeteorUserData.gamePlayCounts,
     };
   } catch (exception) {
     throw new Error(`[mapMeteorUserToSchema] ${exception.message}`);

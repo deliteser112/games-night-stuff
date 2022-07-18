@@ -1,0 +1,5 @@
+mutation addSubscriber($name: String!, $email: String!) {
+  addSubscriber(name: $name, email: $email) {
+    _id
+  }
+}

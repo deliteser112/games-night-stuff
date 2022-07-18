@@ -15,12 +15,41 @@ const navConfig = [
       {
         title: 'dashboard',
         path: `${PATH_DASHBOARD.analytics}`,
-        icon: getIcon('eva:pie-chart-2-fill'),
+        icon: getIcon('logos:google-analytics'),
+      },
+      // {
+      //   title: 'documents',
+      //   path: `${PATH_DASHBOARD.documents}`,
+      //   icon: getIcon('gala:file-doc'),
+      // },
+      {
+        title: 'games',
+        path: `${PATH_DASHBOARD.games}`,
+        icon: getIcon('emojione-v1:video-game'),
       },
       {
-        title: 'documents',
-        path: `${PATH_DASHBOARD.documents}`,
-        icon: getIcon('gala:file-doc'),
+        title: 'my itchlist',
+        path: `${PATH_DASHBOARD.itchlist}`,
+        icon: getIcon('emojione:heart-with-ribbon'),
+      },
+      {
+        title: 'my wishlist',
+        path: `${PATH_DASHBOARD.wishlist}`,
+        icon: getIcon('emojione-v1:shooting-star'),
+      },
+      {
+        title: 'my ownlist',
+        path: `${PATH_DASHBOARD.ownlist}`,
+        icon: getIcon('emojione-v1:thumbs-down'),
+      },
+      {
+        title: 'lending',
+        path: PATH_DASHBOARD.lending.root,
+        icon: getIcon('noto:shopping-cart'),
+        children: [
+          { title: 'Loaned', path: PATH_DASHBOARD.lending.loaned },
+          { title: 'Borrowed', path: PATH_DASHBOARD.lending.borrowed }
+        ],
       },
     ],
   },

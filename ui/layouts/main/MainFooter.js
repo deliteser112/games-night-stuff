@@ -13,32 +13,32 @@ import Logo from '../../components/Logo';
 
 const LINKS = [
   {
-    headline: 'Meteor',
+    headline: 'GamesNight',
     children: [
       { name: 'About us', href: PATH_PAGE.about },
       { name: 'Contact us', href: PATH_PAGE.contact },
-      { name: 'FAQs', href: PATH_PAGE.faqs },
-    ],
+      { name: 'FAQs', href: PATH_PAGE.faqs }
+    ]
   },
   {
     headline: 'Legal',
     children: [
       { name: 'Terms and Condition', href: '#' },
-      { name: 'Privacy Policy', href: '#' },
-    ],
+      { name: 'Privacy Policy', href: '#' }
+    ]
   },
   {
     headline: 'Contact',
     children: [
-      { name: 'support@meteor.starter.kit', href: '#' },
-      { name: 'Los Angeles, 359  Hidden Valley Road', href: '#' },
-    ],
-  },
+      { name: 'care@gamesnight.fun', href: '#' },
+      { name: '13 Forester Way Pakenham VIC 3810, Australia', href: '#' }
+    ]
+  }
 ];
 
 const RootStyle = styled('div')(({ theme }) => ({
   position: 'relative',
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: theme.palette.background.default
 }));
 
 // ----------------------------------------------------------------------
@@ -54,12 +54,16 @@ export default function MainFooter() {
           sx={{ textAlign: { xs: 'center', md: 'left' } }}
         >
           <Grid item xs={12} sx={{ mb: 3 }}>
-            <Logo sx={{ mx: { xs: 'auto', md: 'inherit' } }} />
+            <Stack spacing={1} direction="row" alignItems="center">
+              <Logo sx={{ mx: { xs: 'auto', md: 'inherit' } }} />
+              <Typography variant="subtitle1">GamesNight</Typography>
+            </Stack>
           </Grid>
           <Grid item xs={8} md={3}>
             <Typography variant="body2" sx={{ pr: { md: 5 } }}>
-              The starting point for your next project with Meteor Starter Kit, built on the newest
-              version of Material-UI, Meteor, GraphQL ©, ready to be customized to your idea.
+              It keeps a record of all the games in your growing collection. Tracks who you have lent them to. Connects
+              you with the people and the games you are itching to play. It even helps you choose your next game. All
+              this, from any device you like.
             </Typography>
 
             <Stack
@@ -72,11 +76,7 @@ export default function MainFooter() {
           </Grid>
 
           <Grid item xs={12} md={7}>
-            <Stack
-              spacing={5}
-              direction={{ xs: 'column', md: 'row' }}
-              justifyContent="space-between"
-            >
+            <Stack spacing={5} direction={{ xs: 'column', md: 'row' }} justifyContent="space-between">
               {LINKS.map((list) => (
                 <Stack key={list.headline} spacing={2}>
                   <Typography component="p" variant="overline">
@@ -107,7 +107,7 @@ export default function MainFooter() {
             mt: 10,
             pb: 5,
             fontSize: 13,
-            textAlign: { xs: 'center', md: 'left' },
+            textAlign: { xs: 'center', md: 'left' }
           }}
         >
           © 2022. All rights reserved

@@ -1,0 +1,5 @@
+mutation addWish($wish: String) {
+  addWish(wish: $wish) {
+    _id
+  }
+}
