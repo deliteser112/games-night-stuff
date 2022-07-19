@@ -26,6 +26,15 @@ import DocumentCreate from '../pages/dashboard/document/DocumentCreate';
 import Games from '../pages/dashboard/games';
 import GameDetails from '../pages/dashboard/games/GameDetails';
 
+// itchlist
+import ItchList from '../pages/dashboard/itchlist';
+
+// wishlist
+import WishList from '../pages/dashboard/wishlist';
+
+// ownlist
+import OwnList from '../pages/dashboard/ownlist';
+
 // users
 import User from '../pages/dashboard/user';
 import UserProfile from '../pages/dashboard/user-profile';
@@ -66,6 +75,15 @@ export default function Router() {
         // games
         { path: 'games', element: <Games /> },
         { path: 'games/:gameId', element: <GameDetails /> },
+
+        // itchlist
+        { path: 'itchlist', element: <ItchList /> },
+
+        // wishlist
+        { path: 'wishlist', element: <WishList /> },
+
+        // ownlist
+        { path: 'ownlist', element: <OwnList /> },
 
         // Admin/users
         {

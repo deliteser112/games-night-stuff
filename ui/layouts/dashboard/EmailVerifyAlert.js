@@ -66,7 +66,7 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
           sx={{ width: '100%' }}
         >
           <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center">
-            <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: 'center' }}>
+            <Typography variant="body2" sx={{ color: 'text.primary', textAlign: 'center' }}>
               Hey friend! Can you
               <Typography variant="body2" component="span" sx={{ fontWeight: 700 }}>
                 {' '}

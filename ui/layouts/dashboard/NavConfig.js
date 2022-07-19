@@ -17,11 +17,6 @@ const navConfig = [
         path: `${PATH_DASHBOARD.analytics}`,
         icon: getIcon('logos:google-analytics'),
       },
-      // {
-      //   title: 'documents',
-      //   path: `${PATH_DASHBOARD.documents}`,
-      //   icon: getIcon('gala:file-doc'),
-      // },
       {
         title: 'games',
         path: `${PATH_DASHBOARD.games}`,
@@ -30,12 +25,12 @@ const navConfig = [
       {
         title: 'my itchlist',
         path: `${PATH_DASHBOARD.itchlist}`,
-        icon: getIcon('emojione:heart-with-ribbon'),
+        icon: getIcon('emojione-v1:shooting-star'),
       },
       {
         title: 'my wishlist',
         path: `${PATH_DASHBOARD.wishlist}`,
-        icon: getIcon('emojione-v1:shooting-star'),
+        icon: getIcon('emojione:heart-with-ribbon'),
       },
       {
         title: 'my ownlist',

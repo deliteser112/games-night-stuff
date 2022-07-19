@@ -17,7 +17,7 @@ GameAnalytic.propTypes = {
   icon: PropTypes.string,
   percent: PropTypes.number,
   price: PropTypes.number,
-  total: PropTypes.number,
+  total: PropTypes.number
 };
 
 export default function GameAnalytic({ title, total, icon, color, percent, price }) {
@@ -47,8 +47,11 @@ export default function GameAnalytic({ title, total, icon, color, percent, price
           </Box>
         </Typography>
 
-        <Typography variant="subtitle2" sx={{ color }}>
-          {fCurrency(price)}
+        <Typography variant="subtitle2">
+          {fShortenNumber(price)}{' '}
+          <Box component="span" sx={{ color, typography: 'body2' }}>
+            players
+          </Box>
         </Typography>
       </Stack>
     </Stack>

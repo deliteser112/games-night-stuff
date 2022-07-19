@@ -1,28 +1,19 @@
-import sumBy from 'lodash/sumBy';
-
-import React from 'react';
-import ReactLoading from 'react-loading';
-import { Link as RouterLink } from 'react-router-dom';
-
-import { useTheme } from '@mui/material/styles';
+import React, { useState, useEffect } from 'react';
 
 // import queries
 import { useQuery, useMutation } from '@apollo/react-hooks';
 // @mui
-import { Divider, Container, Stack, Card } from '@mui/material';
+import { Container } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 
 // components
-import Scrollbar from '../../../components/Scrollbar';
 import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
-import Iconify from '../../../components/Iconify';
 
 // sections
 import GameList from './GameList';
-import GameAnalytic from './GameAnalytic';
 
 // queries
 import { games as gamesQuery } from '../../../_queries/Games.gql';
@@ -39,7 +30,7 @@ import {
 } from '../../../_mutations/Users.gql';
 // ----------------------------------------------------------------------
 
-export default function Games() {
+export default function OwnList() {
   const [addGameToWishlist] = useMutation(addGameToWishlistMutation);
   const [removeGameFromWishlist] = useMutation(removeGameFromWishlistMutation);
 
@@ -49,13 +40,28 @@ export default function Games() {
   const [addGameToOwnlist] = useMutation(addGameToOwnlistMutation);
   const [removeGameFromOwnlist] = useMutation(removeGameFromOwnlistMutation);
 
-  const theme = useTheme();
+  const [games, setGames] = useState([]);
+  const [userName, setUserName] = useState('');
 
   const { loading, data } = useQuery(gamesQuery);
-  const games = (data && data.games) || [];
+  const tmpGames = (data && data.games) || [];
 
   const userData = useQuery(userQuery).data;
   const tmpUser = userData && userData.user;
+
+  useEffect(() => {
+    if (tmpUser && tmpGames.length > 0) {
+      const tmpName = tmpUser.name.first || '';
+      setUserName(tmpName);
+      const { ownlist } = tmpUser;
+      if (ownlist && ownlist.length > 0) {
+        const gameList = ownlist.map((gameId) => {
+          return tmpGames.find(({ _id }) => gameId === _id);
+        })
+        setGames(gameList);
+      }
+    }
+  }, [tmpUser, tmpGames]);
 
   const handleOwnList = (status, _id) => {
     const mutate = status ? addGameToOwnlist : removeGameFromOwnlist;
@@ -91,55 +97,13 @@ export default function Games() {
   };
 
   return (
-    <Page title="Games">
+    <Page title="OwnList">
       <Container maxWidth="lg">
         <HeaderBreadcrumbs
-          heading="Game List"
-          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'Game List' }]}
+          heading={`Total games in ${userName}'s ownlist: ${games.length}`}
+          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'OwnList' }]}
         />
 
-        <Card sx={{ mb: 5 }}>
-          <Scrollbar>
-            <Stack
-              direction="row"
-              divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
-              sx={{ py: 2 }}
-            >
-              <GameAnalytic
-                title="Total"
-                total={games.length}
-                percent={100}
-                price={1205}
-                icon="ic:round-receipt"
-                color={theme.palette.info.main}
-              />
-              <GameAnalytic
-                title="Itchlist"
-                total={14}
-                percent={20}
-                price={222}
-                icon="eva:checkmark-circle-2-fill"
-                color={theme.palette.success.main}
-              />
-              <GameAnalytic
-                title="Wishlist"
-                total={6}
-                percent={33}
-                price={365}
-                icon="eva:clock-fill"
-                color={theme.palette.warning.main}
-              />
-              <GameAnalytic
-                title="Ownlist"
-                total={6}
-                percent={33}
-                price={42}
-                icon="eva:bell-fill"
-                color={theme.palette.error.main}
-              />
-            </Stack>
-          </Scrollbar>
-        </Card>
         <GameList
           isLoading={loading}
           gameList={games}

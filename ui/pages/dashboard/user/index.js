@@ -26,8 +26,6 @@ export default function Users() {
 
   const users = (data && data.users && data.users.users) || [];
 
-  console.log('USERS:', users);
-
   const handleDeleteUser = (_id) => {
     removeUser({
       variables: {

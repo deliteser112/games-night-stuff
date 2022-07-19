@@ -55,8 +55,6 @@ export default {
   addGameToWishlist: async (root, args, context) => {
     if (!context.user) throw new Error('Sorry, you must be logged in to add a game to your wishlist');
    
-    console.log('Here is add function');
-
     updateWishlist({ currentUser: context.user, _id: args._id });
 
     return queryUser({ userIdToQuery: context.user._id });
@@ -64,7 +62,6 @@ export default {
   removeGameFromWishlist: async (root, args, context) => {
     if (!context.user) throw new Error('Sorry, you must be logged in to remove a game from your wishlist');
 
-    console.log('Here is remove function');
     removeFromWishlist({ currentUser: context.user, _id: args._id });
 
     return queryUser({ userIdToQuery: context.user._id });
@@ -72,14 +69,12 @@ export default {
   addGameToItchlist: async (root, args, context) => {
     if (!context.user) throw new Error('Sorry, you must be logged in to add a game to your ownlist');
 
-    console.log('here is itch add function')
     updateItchlist({ currentUser: context.user, _id: args._id });
 
     return queryUser({ userIdToQuery: context.user._id });
   },
   removeGameFromItchlist: async (root, args, context) => {
     if (!context.user) throw new Error('Sorry, you must be logged in to remove a game from your itchlist');
-    console.log('here is itch remove function')
 
     removeFromItchlist({ currentUser: context.user, _id: args._id });
 
