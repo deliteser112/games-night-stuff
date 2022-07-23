@@ -67,11 +67,8 @@ function OAuthLoginButton({ service, callback }) {
       variant="contained"
       sx={{
         marginBottom: 2,
-        // color: 'grey.700',
         ...(service === 'github' && { backgroundColor: theme.palette.warning.dark }),
         ...(service === 'google' && { background: theme.palette.error.dark }),
-        // backgroundColor: theme.palette.grey[50],
-        // borderColor: theme.palette.grey[100],
         '&:hover': {
           ...(service === 'github' && { backgroundColor: theme.palette.warning.main }),
           ...(service === 'google' && { background: theme.palette.error.main })
