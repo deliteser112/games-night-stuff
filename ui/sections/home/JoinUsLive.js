@@ -41,6 +41,21 @@ const SocialContainer = styled('div')(({ theme }) => ({
   }
 }));
 
+const ColorlibStepIconRoot = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.grey[700],
+  zIndex: 1,
+  color: '#fff',
+  width: 70,
+  height: 70,
+  display: 'flex',
+  borderRadius: '50%',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundImage: 'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+  boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
+  // backgroundImage: 'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)'
+}));
+
 // ----------------------------------------------------------------------
 
 export default function JoinUsLive() {
@@ -71,69 +86,50 @@ export default function JoinUsLive() {
               videos, so check us out at YouTube/GamesNightApp
             </Typography>
           </TextContainer>
+          <Box m={2} />
           <SocialContainer>
-            <Stack direction="row" alignItems="center" spacing={{ xs: 1, md: 2 }}>
-              <Link
-                href="https://icon-sets.iconify.design/ic/twotone-support-agent/"
-                target="_blank"
-                rel="noopener"
-                variant="body2"
-              >
-                <IconButton aria-label="delete" color="error" variant="contained">
-                  <Iconify icon={'entypo-social:youtube'} sx={{ width: 50, height: 50 }} />
-                </IconButton>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Link href="https://www.twitch.tv/gamesnightapp" target="_blank" rel="noopener" variant="body2">
+                <ColorlibStepIconRoot>
+                  <Iconify icon={'teenyicons:twitch-outline'} sx={{ width: 30, height: 30 }} />
+                </ColorlibStepIconRoot>
               </Link>
               <Link
-                href="https://icon-sets.iconify.design/ic/twotone-support-agent/"
+                href="https://www.youtube.com/channel/UC-WzWJBeHq81DdJkgbFzCiw"
                 target="_blank"
                 rel="noopener"
                 variant="body2"
               >
-                <IconButton aria-label="delete" color="success" variant="contained">
-                  <Iconify icon={'akar-icons:discord-fill'} sx={{ width: 50, height: 50 }} />
-                </IconButton>
+                <ColorlibStepIconRoot>
+                  <Iconify icon={'entypo-social:youtube'} sx={{ width: 30, height: 30 }} />
+                </ColorlibStepIconRoot>
               </Link>
-              <Link
-                href="https://icon-sets.iconify.design/ic/twotone-support-agent/"
-                target="_blank"
-                rel="noopener"
-                variant="body2"
-              >
-                <IconButton aria-label="delete" color="secondary" variant="contained">
-                  <Iconify icon={'akar-icons:facebook-fill'} sx={{ width: 50, height: 50 }} />
-                </IconButton>
+              <Link href="https://discord.gg/6fsc8KMZVD" target="_blank" rel="noopener" variant="body2">
+                <ColorlibStepIconRoot>
+                  <Iconify icon={'akar-icons:discord-fill'} sx={{ width: 30, height: 30 }} />
+                </ColorlibStepIconRoot>
+              </Link>
+              <Link href="https://www.facebook.com/GamesNightApp" target="_blank" rel="noopener" variant="body2">
+                <ColorlibStepIconRoot>
+                  <Iconify icon={'akar-icons:facebook-fill'} sx={{ width: 30, height: 30 }} />
+                </ColorlibStepIconRoot>
               </Link>
 
-              <Link
-                href="https://icon-sets.iconify.design/ic/twotone-support-agent/"
-                target="_blank"
-                rel="noopener"
-                variant="body2"
-              >
-                <IconButton aria-label="delete" color="info" variant="contained">
-                  <Iconify icon={'el:twitter'} sx={{ width: 50, height: 50 }} />
-                </IconButton>
+              <Link href="https://twitter.com/GamesNight8" target="_blank" rel="noopener" variant="body2">
+                <ColorlibStepIconRoot>
+                  <Iconify icon={'el:twitter'} sx={{ width: 30, height: 30 }} />
+                </ColorlibStepIconRoot>
               </Link>
-              <Link
-                href="https://icon-sets.iconify.design/ic/twotone-support-agent/"
-                target="_blank"
-                rel="noopener"
-                variant="body2"
-              >
-                <IconButton aria-label="delete" color="warning" variant="contained">
-                  <Iconify icon={'teenyicons:instagram-solid'} sx={{ width: 50, height: 50 }} />
-                </IconButton>
+              <Link href="https://instagram.com/gamesnightapp/" target="_blank" rel="noopener" variant="body2">
+                <ColorlibStepIconRoot>
+                  <Iconify icon={'teenyicons:instagram-solid'} sx={{ width: 30, height: 30 }} />
+                </ColorlibStepIconRoot>
               </Link>
 
-              <Link
-                href="https://icon-sets.iconify.design/ic/twotone-support-agent/"
-                target="_blank"
-                rel="noopener"
-                variant="body2"
-              >
-                <IconButton aria-label="delete" color="primary" variant="contained">
-                  <Iconify icon={'cib:pinterest'} sx={{ width: 50, height: 50 }} />
-                </IconButton>
+              <Link href="https://www.pinterest.com.au/gamesnightapp/" target="_blank" rel="noopener" variant="body2">
+                <ColorlibStepIconRoot>
+                  <Iconify icon={'cib:pinterest'} sx={{ width: 30, height: 30 }} />
+                </ColorlibStepIconRoot>
               </Link>
             </Stack>
           </SocialContainer>

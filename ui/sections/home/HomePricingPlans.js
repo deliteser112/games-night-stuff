@@ -32,6 +32,7 @@ const RootStyle = styled('div')(({ theme }) => ({
   },
 }));
 
+
 // ----------------------------------------------------------------------
 
 export default function HomePricingPlans() {

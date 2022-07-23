@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
-import { Box, Container, Typography, Stack, IconButton, InputAdornment, Alert } from '@mui/material';
+import { Box, Container, Typography, Stack, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 // routes
@@ -39,6 +39,16 @@ const TextContainer = styled('div')(({ theme }) => ({
     transform: 'translate(0, -50%)'
   }
 }));
+
+const ButtonStyle = styled(LoadingButton)({
+  background: 'linear-gradient(90deg, #AC32E4 0%, #7918F2 48%, #4801FF 100%)',
+  border: 0,
+  borderRadius: 3,
+  boxShadow: '0 3px 5px 2px rgb(0 0 0 / 30%)',
+  color: 'white',
+  height: 48,
+  padding: '0 30px',
+});
 
 // ----------------------------------------------------------------------
 
@@ -111,9 +121,9 @@ export default function Community() {
                     <RHFTextField name="name" label="Your Name" />
                     <RHFTextField name="email" label="Your Email" />
 
-                    <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+                    <ButtonStyle fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
                       Subscribe
-                    </LoadingButton>
+                    </ButtonStyle>
                   </Stack>
                 </FormProvider>
               </Box>

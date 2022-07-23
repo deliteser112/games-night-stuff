@@ -34,7 +34,7 @@ export default function TopSection({ title, subtitle, description }) {
   return (
     <RootStyle>
       <TitleStyle>
-        <Typography variant="h2">{title}</Typography>
+        <Typography variant="h1">{title}</Typography>
         <Typography variant="h6" color="text.secondary">{description}</Typography>
       </TitleStyle>
       <Image alt={title} sx={{ width: '100%', [theme.breakpoints.down('sm')]: { height: '200px' }, marginBottom: 5 }} src="/assets/terms-back.jpg" />

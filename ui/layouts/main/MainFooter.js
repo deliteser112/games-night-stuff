@@ -22,7 +22,7 @@ const LINKS = [
   {
     headline: 'Legal',
     children: [
-      { name: 'Terms and Condition', href: PATH_PAGE.termsOfService },
+      { name: 'Terms of Service', href: PATH_PAGE.termsOfService },
       { name: 'Privacy Policy', href: PATH_PAGE.privacy }
     ]
   },

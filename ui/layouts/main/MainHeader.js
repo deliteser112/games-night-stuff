@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, useTheme } from '@mui/material/styles';
-import { Box, Button, AppBar, Toolbar, Container, Typography } from '@mui/material';
+import { Box, Button, AppBar, Toolbar, Container, Typography, Stack } from '@mui/material';
 // hooks
 import useAuth from '../../hooks/useAuth';
 import useOffSetTop from '../../hooks/useOffSetTop';
@@ -47,6 +47,25 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
   boxShadow: theme.customShadows.z8
 }));
 
+const LoginButtonStyle = styled(Button)({
+  // background: 'linear-gradient(90deg, #AC32E4 0%, #7918F2 48%, #4801FF 100%)',
+  border: '1px solid white',
+  borderRadius: 3,
+  boxShadow: '0 3px 5px 2px rgb(0 0 0 / 30%)',
+  color: 'white',
+  height: 38,
+  padding: '0 30px'
+});
+
+const RegisterButtonStyle = styled(Button)({
+  background: 'linear-gradient(90deg, #AC32E4 0%, #7918F2 48%, #4801FF 100%)',
+  border: 0,
+  borderRadius: 3,
+  boxShadow: '0 3px 5px 2px rgb(0 0 0 / 30%)',
+  color: 'white',
+  height: 38,
+  padding: '0 30px'
+});
 // ----------------------------------------------------------------------
 export default function MainHeader() {
   const { user } = useAuth();
@@ -90,15 +109,20 @@ export default function MainHeader() {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
 
-          {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
+          {isDesktop && user && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
           {isDesktop && (
             <>
               {user ? (
                 <AccountPopover />
               ) : (
-                <Button variant="contained" rel="noopener" href={PATH_AUTH.login}>
-                  Login
-                </Button>
+                <Stack direction="row" spacing={2}>
+                  <LoginButtonStyle variant="outlined" size="small" rel="noopener" href={PATH_AUTH.login}>
+                    Login
+                  </LoginButtonStyle>
+                  <RegisterButtonStyle variant="contained" size="small" rel="noopener" href={PATH_AUTH.register}>
+                    Register
+                  </RegisterButtonStyle>
+                </Stack>
               )}
             </>
           )}

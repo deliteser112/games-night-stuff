@@ -22,6 +22,15 @@ const RootStyle = styled(Card)(({ theme }) => ({
   },
 }));
 
+const ButtonStyle = styled(Button)({
+  background: 'linear-gradient(90deg, #AC32E4 0%, #7918F2 48%, #4801FF 100%)',
+  border: 0,
+  borderRadius: 3,
+  boxShadow: '0 3px 5px 2px rgb(0 0 0 / 30%)',
+  color: 'white',
+  height: 48,
+  padding: '0 30px',
+});
 // ----------------------------------------------------------------------
 
 export default function PricingPlanCard({ card, index }) {
@@ -102,9 +111,9 @@ export default function PricingPlanCard({ card, index }) {
         ))}
       </Stack>
 
-      <Button fullWidth size="large" variant="contained" disabled={index === 0}>
+      <ButtonStyle fullWidth size="large" variant="contained" disabled={index === 0}>
         {labelAction}
-      </Button>
+      </ButtonStyle>
     </RootStyle>
   );
 }
