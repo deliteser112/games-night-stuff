@@ -27,7 +27,8 @@ const ListSubheaderStyle = styled((props) => <ListSubheader disableSticky disabl
 const ListItemStyle = styled((props) => <ListItemButton disableGutters {...props} />)(({ theme }) => ({
   ...theme.typography.body2,
   height: 48,
-  paddingLeft: theme.spacing(5),
+  padding: theme.spacing(3),
+  margin: theme.spacing(0, 2),
   position: 'relative',
   textTransform: 'capitalize',
   color: theme.palette.text.secondary,

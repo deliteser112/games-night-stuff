@@ -22,19 +22,19 @@ export default `
 
   type Friends {
     userId: String
-    username: String
+    emailAddress: String
   }
   
   type LoanedTo {
     _id: String
     userId: String
-    username: String
+    emailAddress: String
   }
 
   type BorrowedFrom {
     _id: String
     userId: String
-    username: String
+    emailAddress: String
   }
 
   input ProfileInput {

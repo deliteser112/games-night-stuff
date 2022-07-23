@@ -35,6 +35,12 @@ import WishList from '../pages/dashboard/wishlist';
 // ownlist
 import OwnList from '../pages/dashboard/ownlist';
 
+// loanedlist
+import LoanedTo from '../pages/dashboard/loanedTo';
+
+// borrowedlist
+import BorrowedFrom from '../pages/dashboard/borrowedFrom';
+
 // users
 import User from '../pages/dashboard/user';
 import UserProfile from '../pages/dashboard/user-profile';
@@ -85,6 +91,12 @@ export default function Router() {
         // ownlist
         { path: 'ownlist', element: <OwnList /> },
 
+        // loanedTo
+        { path: 'lending/loaned-to', element: <LoanedTo /> },
+
+         // borrowedFrom
+         { path: 'lending/borrowed-from', element: <BorrowedFrom /> },
+        
         // Admin/users
         {
           path: 'users',

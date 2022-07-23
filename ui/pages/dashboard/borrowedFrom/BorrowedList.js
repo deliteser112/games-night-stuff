@@ -27,7 +27,7 @@ import {
 } from '../../../components/table';
 
 // sections
-import { GameTableRow, GameTableToolbar } from '../../../sections/@dashboard/game-list';
+import { BorrowedTableRow, BorrowedTableToolbar } from '../../../sections/@dashboard/borrowed-list';
 
 // ----------------------------------------------------------------------
 
@@ -35,12 +35,12 @@ const TABLE_HEAD = [
   { id: 'title', label: 'Title', align: 'left' },
   { id: 'timeToPlay', label: 'Time to play', align: 'left' },
   { id: 'numberOfPlayers', label: 'Number of players', align: 'left' },
-  { id: '' }
+  { id: 'borrowedFrom', label: 'Borrowed From', align: 'left' }
 ];
 
 // ----------------------------------------------------------------------
 
-export default function GameList({ isLoading, gameList, user, onWishList, onItchList, onOwnList }) {
+export default function BorrowedList({ isLoading, gameList, onShowReturnModal }) {
   const {
     dense,
     page,
@@ -95,7 +95,7 @@ export default function GameList({ isLoading, gameList, user, onWishList, onItch
 
   return (
     <Card>
-      <GameTableToolbar filterName={filterName} onFilterName={handleFilterName} />
+      <BorrowedTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
       <Scrollbar>
         <TableContainer sx={{ minWidth: 960, position: 'relative' }}>
@@ -141,15 +141,12 @@ export default function GameList({ isLoading, gameList, user, onWishList, onItch
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) =>
                   row ? (
-                    <GameTableRow
-                      key={row._id}
-                      user={user}
+                    <BorrowedTableRow
+                      key={index}
                       row={row}
                       selected={selected.includes(row._id)}
                       onSelectRow={() => onSelectRow(row._id)}
-                      onOwnList={(status) => onOwnList(status, row._id)}
-                      onWishList={(status) => onWishList(status, row._id)}
-                      onItchList={(status) => onItchList(status, row._id)}
+                      onShowReturnModal={() => onShowReturnModal(row.userId, row._id)}
                     />
                   ) : (
                     !isNotFound && <TableSkeleton key={index} sx={{ height: denseHeight }} />

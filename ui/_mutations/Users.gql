@@ -78,26 +78,26 @@ mutation setUsersUsername($username: String, $email: String) {
   }
 }
 
-mutation addFriend($friendEmail: String) {
-  addFriend(friendEmail: $friendEmail) {
+mutation addFriend($_id: String) {
+  addFriend(_id: $_id) {
     _id
   }
 }
 
-mutation removeFriend($friendUsername: String) {
-  removeFriend(friendUsername: $friendUsername) {
+mutation removeFriend($_id: String) {
+  removeFriend(_id: $_id) {
     _id
   }
 }
 
-mutation loanGameToUser($boardGameId: String, $usernameToLoanTo: String) {
-  loanGameToUser(boardGameId: $boardGameId, usernameToLoanTo: $usernameToLoanTo) {
+mutation loanGameToUser($boardGameId: String, $userIdToLoanTo: String) {
+  loanGameToUser(boardGameId: $boardGameId, userIdToLoanTo: $userIdToLoanTo) {
     _id
   }
 }
 
-mutation returnUsersGame($boardGameId: String, $usernameToLoanTo: String, $returnDate: String) {
-  returnUsersGame(boardGameId: $boardGameId, usernameToLoanTo: $usernameToLoanTo, returnDate: $returnDate) {
+mutation returnUsersGame($boardGameId: String, $userIdToLoanTo: String, $returnDate: String) {
+  returnUsersGame(boardGameId: $boardGameId, userIdToLoanTo: $userIdToLoanTo, returnDate: $returnDate) {
     _id
   }
 }

@@ -6,7 +6,7 @@ export default {
 
     return Wishes.insert({
       wish: args.wish,
-      username: context.user.username,
+      emailAddress: context.user.emails[0].address,
       userId: context.user._id,
     });
   },

@@ -9,8 +9,8 @@ let action;
 // //////////////////////////////////////////////////////////////
 
 
-const returnUsersGameLocal = (_id, boardGameId, userLoanedToo, returnDate) => {
-  const userToLoanTo = Meteor.users.findOne({ username: userLoanedToo });
+const returnUsersGameLocal = (_id, boardGameId, userIdLoanedTo, returnDate) => {
+  const userToLoanTo = Meteor.users.findOne({ _id: userIdLoanedTo });
   const userToLoanFrom = Meteor.users.findOne(_id);
 
   Meteor.users.update(
@@ -20,14 +20,14 @@ const returnUsersGameLocal = (_id, boardGameId, userLoanedToo, returnDate) => {
         borrowedFrom: {
           _id: boardGameId,
           userId: _id,
-          username: userToLoanFrom.username,
+          emailAddress: userToLoanFrom.emailAddress,
         },
       },
       $addToSet: {
         allTimeBorrowedFrom: {
           _id: boardGameId,
           userId: _id,
-          username: userToLoanFrom.username,
+          emailAddress: userToLoanFrom.emailAddress,
           returnDate,
         },
       },
@@ -39,22 +39,22 @@ const returnUsersGameLocal = (_id, boardGameId, userLoanedToo, returnDate) => {
       loanedTo: {
         _id: boardGameId,
         userId: userToLoanTo._id,
-        username: userToLoanTo.username,
+        emailAddress: userToLoanTo.emailAddress,
       },
     },
     $addToSet: {
       allTimeLoanedTo: {
         _id: boardGameId,
         userId: userToLoanTo._id,
-        username: userToLoanTo.username,
+        emailAddress: userToLoanTo.emailAddress,
         returnDate,
       },
     },
   });
 };
 
-const lendGameOut = (_id, boardGameId, usernameToLoanTo) => {
-  const userToLoanTo = Meteor.users.findOne({ username: usernameToLoanTo });
+const lendGameOut = (_id, boardGameId, userIdToLoanTo) => {
+  const userToLoanTo = Meteor.users.findOne({ _id: userIdToLoanTo });
   const userToLoanFrom = Meteor.users.findOne(_id);
 
   Meteor.users.update(
@@ -64,12 +64,12 @@ const lendGameOut = (_id, boardGameId, usernameToLoanTo) => {
         borrowedFrom: {
           _id: boardGameId,
           userId: _id,
-          username: userToLoanFrom.username,
+          emailAddress: userToLoanFrom.emails[0].address,
         },
         allTimeBorrowedFrom: {
           _id: boardGameId,
           userId: _id,
-          username: userToLoanFrom.username,
+          emailAddress: userToLoanFrom.emails[0].address,
         },
       },
     },
@@ -80,19 +80,19 @@ const lendGameOut = (_id, boardGameId, usernameToLoanTo) => {
       loanedTo: {
         _id: boardGameId,
         userId: userToLoanTo._id,
-        username: userToLoanTo.username,
+        emailAddress: userToLoanTo.emails[0].address,
       },
       allTimeLoanedTo: {
         _id: boardGameId,
         userId: userToLoanTo._id,
-        username: userToLoanTo.username,
+        emailAddress: userToLoanTo.emails[0].address,
       },
     },
   });
 };
 
-const removeFriendUser = (_id, friendUsername) => {
-  const friendUser = Meteor.users.findOne({ username: friendUsername });
+const removeFriendUser = (_id, friendId) => {
+  const friendUser = Meteor.users.findOne({ _id: friendId });
   const myUser = Meteor.users.findOne(_id);
 
   Meteor.users.update(
@@ -101,7 +101,7 @@ const removeFriendUser = (_id, friendUsername) => {
       $pull: {
         friends: {
           userId: _id,
-          username: myUser.username,
+          emailAddress: myUser.emails[0].address,
         },
       },
     },
@@ -111,14 +111,14 @@ const removeFriendUser = (_id, friendUsername) => {
     $pull: {
       friends: {
         userId: friendUser._id,
-        username: friendUser.username,
+        emailAddress: friendUser.emails[0].address,
       },
     },
   });
 };
 
-const addFriendUser = (_id, friendEmail) => {
-  const friendUser = Meteor.users.findOne({ email: friendEmail });
+const addFriendUser = (_id, friendId) => {
+  const friendUser = Meteor.users.findOne({ _id: friendId });
   const myUser = Meteor.users.findOne(_id);
 
   Meteor.users.update(
@@ -127,7 +127,7 @@ const addFriendUser = (_id, friendEmail) => {
       $addToSet: {
         friends: {
           userId: _id,
-          username: myUser.username,
+          emailAddress: myUser.emails[0].address,
         },
       },
     },
@@ -137,7 +137,7 @@ const addFriendUser = (_id, friendEmail) => {
     $addToSet: {
       friends: {
         userId: friendUser._id,
-        username: friendUser.username,
+        emailAddress: friendUser.emails[0].address,
       },
     },
   });
@@ -428,18 +428,18 @@ export function setUsername(_id, username, email) {
   setUsersUsername(_id, username, email);
 }
 
-export function addFriend(_id, friendEmail) {
-  addFriendUser(_id, friendEmail);
+export function addFriend(_id, friendId) {
+  addFriendUser(_id, friendId);
 }
 
-export function removeFriend(_id, friendUsername) {
-  removeFriendUser(_id, friendUsername);
+export function removeFriend(_id, friendId) {
+  removeFriendUser(_id, friendId);
 }
 
-export function loanGameToUser(_id, boardGameId, usernameToLoanTo) {
-  lendGameOut(_id, boardGameId, usernameToLoanTo);
+export function loanGameToUser(_id, boardGameId, userIdToLoanTo) {
+  lendGameOut(_id, boardGameId, userIdToLoanTo);
 }
 
-export function returnUsersGame(_id, boardGameId, usernameToLoanTo, returnDate) {
-  returnUsersGameLocal(_id, boardGameId, usernameToLoanTo, returnDate);
+export function returnUsersGame(_id, boardGameId, userIdToLoanTo, returnDate) {
+  returnUsersGameLocal(_id, boardGameId, userIdToLoanTo, returnDate);
 }

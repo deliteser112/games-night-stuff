@@ -24,17 +24,17 @@ query users {
       subscription
       friends {
         userId
-        username
+        emailAddress
       }
       loanedTo {
         _id
         userId
-        username
+        emailAddress
       }
       borrowedFrom {
         _id
         userId
-        username
+        emailAddress
       }
       gamePlayCounts {
         _id
@@ -54,17 +54,17 @@ query user($_id: String) {
     subscription
     friends {
       userId
-      username
+      emailAddress
     }
     loanedTo {
       _id
       userId
-      username
+      emailAddress
     }
     borrowedFrom {
       _id
       userId
-      username
+      emailAddress
     }
     gamePlayCounts {
       _id
@@ -84,17 +84,17 @@ query userFromUsername($username: String) {
       subscription
       friends {
         userId
-        username
+        emailAddress
       }
       loanedTo {
         _id
         userId
-        username
+        emailAddress
       }
       borrowedFrom {
         _id
         userId
-        username
+        emailAddress
       }
       gamePlayCounts {
         _id

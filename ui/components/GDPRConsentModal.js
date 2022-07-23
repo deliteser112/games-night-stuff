@@ -12,6 +12,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import { Link } from '@mui/material';
+
 import { userSettings as userSettingsQuery } from '../_queries/Users.gql';
 import { updateUser as updateUserMutation } from '../_mutations/Users.gql';
 import unfreezeApolloCacheValue from '../../modules/unfreezeApolloCacheValue';
@@ -92,9 +94,10 @@ export default function GDPRConsentModal() {
         <DialogContent dividers>
           <Typography variant="body2" gutterBottom>
             {"In cooperation with the European Union's (EU) "}
-            <a href="https://www.eugdpr.org/" target="_blank" rel="noopener noreferrer">
-              General Data Protection Regulation
-            </a>
+            <Link href="https://www.eugdpr.org/" target="_blank" rel="noopener" variant="body2">
+            General Data Protection Regulation
+          </Link>
+            
             {
               ' (GDPR), we need to obtain your consent for how we make use of your data. Please review each of the settings below to customize your experience.'
             }

@@ -34,7 +34,7 @@ import { GameTableRow, GameTableToolbar } from '../../../sections/@dashboard/gam
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'title', label: 'Product', align: 'left' },
+  { id: 'title', label: 'Title', align: 'left' },
   { id: 'timeToPlay', label: 'Time to play', align: 'left' },
   { id: 'numberOfPlayers', label: 'Number of players', align: 'left' },
   { id: '' }

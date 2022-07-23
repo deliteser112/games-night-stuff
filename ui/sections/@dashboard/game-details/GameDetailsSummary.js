@@ -11,6 +11,7 @@ import SocialsButton from '../../../components/SocialsButton';
 
 // sections
 import GameRatingModal from './GameRatingModal';
+import GameLendModal from './GameLendModal';
 
 // queries
 import { user as userQuery } from '../../../_queries/Users.gql';
@@ -36,6 +37,7 @@ GameDetailsSummary.propTypes = {
 
 export default function GameDetailsSummary({ game, owned, gameId, gamePlayCount, updateGamePlayCount }) {
   const [ratingModalOpen, setRatingModalOpen] = useState(false);
+  const [lendModalOpen, setLendModalOpen] = useState(false);
 
   const handlePlayedSetting = () => {
     const mutate = updateGamePlayCount;
@@ -50,6 +52,11 @@ export default function GameDetailsSummary({ game, owned, gameId, gamePlayCount,
   };
   return (
     <RootStyle>
+      <GameLendModal
+        isOpen={lendModalOpen}
+        gameId={gameId}
+        onCloseDialog={() => setLendModalOpen(false)}
+      />
       <GameRatingModal
         isOpen={ratingModalOpen}
         gameId={gameId}
@@ -162,7 +169,7 @@ export default function GameDetailsSummary({ game, owned, gameId, gamePlayCount,
         color="secondary"
         variant="contained"
         startIcon={<Iconify icon={'carbon:share-knowledge'} />}
-        onClick={() => console.log('add to cart')}
+        onClick={() => setLendModalOpen(true)}
         sx={{ whiteSpace: 'nowrap' }}
       >
         Lend this game

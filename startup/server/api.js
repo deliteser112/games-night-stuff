@@ -110,10 +110,10 @@ const schema = {
 
       cancelSubscription: User
       setUsersUsername(username: String, email: String): User
-      addFriend(friendEmail: String): User
-      removeFriend(friendUsername: String): User
-      loanGameToUser(boardGameId: String, usernameToLoanTo: String): User
-      returnUsersGame(boardGameId: String, usernameToLoanTo: String, returnDate: String): User
+      addFriend(_id: String): User
+      removeFriend(_id: String): User
+      loanGameToUser(boardGameId: String, userIdToLoanTo: String): User
+      returnUsersGame(boardGameId: String, userIdToLoanTo: String, returnDate: String): User
 
       updateUser(user: UserInput): User
       removeUser(_id: String): User

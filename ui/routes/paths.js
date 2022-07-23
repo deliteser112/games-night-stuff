@@ -59,9 +59,9 @@ export const PATH_DASHBOARD = {
   lending: {
     root: path(ROOTS_DASHBOARD, '/lending'),
     // loaned
-    loaned: path(ROOTS_DASHBOARD, '/lending/loaned'),
+    loaned: path(ROOTS_DASHBOARD, '/lending/loaned-to'),
     // borrowed
-    borrowed: path(ROOTS_DASHBOARD, '/lending/borrowed'),
+    borrowed: path(ROOTS_DASHBOARD, '/lending/borrowed-from'),
   },
 
   // users

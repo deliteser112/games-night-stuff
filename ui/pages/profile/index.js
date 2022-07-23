@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { capitalCase } from 'change-case';
 
 import React, { useState } from 'react';
+import ReactLoading from 'react-loading';
 
 // material
 import { styled } from '@mui/material/styles';
@@ -10,18 +11,19 @@ import { Tabs, Tab, Card, Container, Box } from '@mui/material';
 
 // components
 import Page from '../../components/Page';
-import LoadingScreen from '../../components/LoadingScreen';
 import Iconify from '../../components/Iconify';
 
 //
 import ProfileCover from './ProfileCover';
 import ProfileSettings from './ProfileSettings';
 import ProfileGeneral from './ProfileGeneral';
+import ProfileFriends from './ProfileFriends';
 
 import account from '../../_mock/account';
 
 // import queries
 import { user as userQuery } from '../../_queries/Users.gql';
+import { users as usersQuery } from '../../_queries/Users.gql';
 // ----------------------------------------------------------------------
 
 const TabsWrapperStyle = styled('div')(({ theme }) => ({
@@ -42,11 +44,18 @@ const TabsWrapperStyle = styled('div')(({ theme }) => ({
 
 export default function UserProfile() {
   const [currentTab, onChangeTab] = useState('profile');
-  const { data } = useQuery(userQuery, { variables: { _id: Meteor.userId() } });
-  const user = data && data.user;
-  const isUser = user && user.name;
-  if (!isUser) return <LoadingScreen />;
-  const { _id, name, emailAddress } = user;
+  
+  const { loading, data } = useQuery(userQuery, { variables: { _id: Meteor.userId() } });
+  const user = data && data.user || {};
+
+  const usersData = useQuery(usersQuery).data;
+  const users = usersData && usersData.users && usersData.users.users || [];
+
+  if (loading)
+    return (
+      <ReactLoading className="loading-icons" type="spin" color="grey" height={40} width={40} />
+    );
+  const { _id, name, emailAddress, friends } = user;
   const { coverURL } = account;
 
   const myProfile = {
@@ -60,13 +69,18 @@ export default function UserProfile() {
   const PROFILE_TABS = [
     {
       value: 'profile',
-      icon: <Iconify icon="ic:round-account-box" width={20} height={20} />,
+      icon: <Iconify icon="mdi:account-cog-outline" width={20} height={20} />,
       component: <ProfileGeneral currentUser={user} isEdit />
     },
     {
       value: 'settings',
-      icon: <Iconify icon="eva:heart-fill" width={20} height={20} />,
+      icon: <Iconify icon="ant-design:setting-twotone" width={20} height={20} />,
       component: <ProfileSettings settings={user.settings} userId={user._id} />
+    },
+    {
+      value: 'friends',
+      icon: <Iconify icon="material-symbols:supervisor-account-outline" width={20} height={20} />,
+      component: <ProfileFriends users={users} friends={friends} />
     }
   ];
   return (
@@ -89,7 +103,7 @@ export default function UserProfile() {
               onChange={(event, newValue) => onChangeTab(newValue)}
             >
               {PROFILE_TABS.map((tab) => (
-                <Tab disableRipple key={tab.value} value={tab.value} label={capitalCase(tab.value)} />
+                <Tab disableRipple key={tab.value} icon={tab.icon} value={tab.value} label={capitalCase(tab.value)} />
               ))}
             </Tabs>
           </TabsWrapperStyle>

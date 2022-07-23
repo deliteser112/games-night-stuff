@@ -1,8 +1,6 @@
 import sumBy from 'lodash/sumBy';
 
 import React from 'react';
-import ReactLoading from 'react-loading';
-import { Link as RouterLink } from 'react-router-dom';
 
 import { useTheme } from '@mui/material/styles';
 

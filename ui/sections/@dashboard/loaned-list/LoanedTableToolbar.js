@@ -7,12 +7,12 @@ import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
-GameTableToolbar.propTypes = {
+LoanedTableToolbar.propTypes = {
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
 };
 
-export default function GameTableToolbar({ filterName, onFilterName }) {
+export default function LoanedTableToolbar({ filterName, onFilterName }) {
   return (
     <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ py: 2.5, px: 3 }}>
       <TextField

@@ -15,14 +15,15 @@ import { varFade } from '../../components/animate';
 const RootStyle = styled(m.div)(({ theme }) => ({
   position: 'relative',
   backgroundColor: theme.palette.grey[400],
+  // height: '100vh'
   [theme.breakpoints.up('md')]: {
-    top: 0,
-    left: 0,
-    width: '100%',
+    // top: 0,
+    // left: 0,
+    // width: '100%',
     height: '100vh',
-    display: 'flex',
-    position: 'fixed',
-    alignItems: 'center'
+    // display: 'flex',
+    // position: 'fixed',
+    // alignItems: 'center'
   }
 }));
 
@@ -33,7 +34,9 @@ const ContentStyle = styled((props) => <Stack spacing={5} {...props} />)(({ them
   textAlign: 'center',
   position: 'relative',
   paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(15)
+  paddingBottom: theme.spacing(15),
+  height: '100%',
+  justifyContent: 'center'
 }));
 
 const HeroOverlayStyle = styled(m.img)({
@@ -51,7 +54,7 @@ export default function HomeHero() {
     <Box>
       <RootStyle>
         <HeroOverlayStyle alt="overlay" src="/static/home/bg-hero.png" variants={varFade().in} />
-        <Container>
+        <Container sx={{ height: '100vh'}}>
           <ContentStyle>
             <m.div variants={varFade().inRight}>
               <Typography variant="h1" sx={{ color: 'common.white', fontWeight: 900, letterSpacing: 3.2 }}>
@@ -84,7 +87,7 @@ export default function HomeHero() {
           </ContentStyle>
         </Container>
       </RootStyle>
-      <Box sx={{ height: { md: '100vh' } }} />
+      {/* <Box sx={{ height: { md: '100vh' } }} /> */}
     </Box>
   );
 }

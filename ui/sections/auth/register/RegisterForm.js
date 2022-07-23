@@ -43,8 +43,8 @@ export default function RegisterForm() {
           password,
           profile: {
             name: {
-              first: firstName,
-              last: lastName,
+              first: firstName.trim(),
+              last: lastName.trim(),
             },
           },
         },

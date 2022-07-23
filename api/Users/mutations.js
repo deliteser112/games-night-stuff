@@ -14,7 +14,7 @@ import updateUser, {
   addFriend,
   removeFriend,
   loanGameToUser,
-  returnUsersGame,
+  returnUsersGame
 } from './actions/updateUser';
 import queryUser from './actions/queryUser';
 import removeUser from './actions/removeUser';
@@ -26,8 +26,6 @@ export default {
       currentUser: context.user,
       user: args.user
     });
-
-    console.log({ parent, args, context });
 
     return queryUser({ userIdToQuery: args.user._id || context.user._id });
   },
@@ -54,7 +52,7 @@ export default {
   // game mutation
   addGameToWishlist: async (root, args, context) => {
     if (!context.user) throw new Error('Sorry, you must be logged in to add a game to your wishlist');
-   
+
     updateWishlist({ currentUser: context.user, _id: args._id });
 
     return queryUser({ userIdToQuery: context.user._id });
@@ -118,28 +116,28 @@ export default {
   addFriend: async (root, args, context) => {
     if (!context.user) throw new Error('Sorry, you must be logged in to add friends');
 
-    addFriend(context.user._id, args.friendEmail);
+    addFriend(context.user._id, args._id);
 
     return queryUser({ userIdToQuery: context.user._id });
   },
   removeFriend: async (root, args, context) => {
     if (!context.user) throw new Error('Sorry, you must be logged in to remove friends');
 
-    removeFriend(context.user._id, args.friendUsername);
+    removeFriend(context.user._id, args._id);
 
     return queryUser({ userIdToQuery: context.user._id });
   },
   loanGameToUser: async (root, args, context) => {
     if (!context.user) throw new Error('Sorry, you must be logged in to loan a game');
 
-    loanGameToUser(context.user._id, args.boardGameId, args.usernameToLoanTo);
+    loanGameToUser(context.user._id, args.boardGameId, args.userIdToLoanTo);
 
     return queryUser({ userIdToQuery: context.user._id });
   },
   returnUsersGame: async (root, args, context) => {
     if (!context.user) throw new Error('Sorry, you must be logged in to return a game');
 
-    returnUsersGame(context.user._id, args.boardGameId, args.usernameToLoanTo, args.returnDate);
+    returnUsersGame(context.user._id, args.boardGameId, args.userIdToLoanTo, args.returnDate);
 
     return queryUser({ userIdToQuery: context.user._id });
   }
