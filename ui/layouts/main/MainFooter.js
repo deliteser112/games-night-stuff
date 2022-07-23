@@ -16,15 +16,14 @@ const LINKS = [
     headline: 'GamesNight',
     children: [
       { name: 'About us', href: PATH_PAGE.about },
-      { name: 'Contact us', href: PATH_PAGE.contact },
-      { name: 'FAQs', href: PATH_PAGE.faqs }
+      { name: 'Contact us', href: PATH_PAGE.contact }
     ]
   },
   {
     headline: 'Legal',
     children: [
-      { name: 'Terms and Condition', href: '#' },
-      { name: 'Privacy Policy', href: '#' }
+      { name: 'Terms and Condition', href: PATH_PAGE.termsOfService },
+      { name: 'Privacy Policy', href: PATH_PAGE.privacy }
     ]
   },
   {

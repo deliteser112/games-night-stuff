@@ -13,6 +13,8 @@ import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // main pages
 import HomePage from '../pages/external_pages/Home';
 import ContactPage from '../pages/external_pages/Contact';
+import TermsOfService from '../pages/other/TermsOfService';
+import PrivacyPolicy from '../pages/other/PrivacyPolicy';
 
 // others
 import GeneralApp from '../pages/dashboard/GeneralApp';
@@ -169,7 +171,9 @@ export default function Router() {
       element: <MainLayout />,
       children: [
         { element: <HomePage />, index: true },
-        { path: 'contact-us', element: <ContactPage /> }
+        { path: 'contact-us', element: <ContactPage /> },
+        { path: 'terms-of-service', element: <TermsOfService /> },
+        { path: 'privacy', element: <PrivacyPolicy /> },
       ]
     },
     { path: '*', element: <Navigate to="/404" replace /> }

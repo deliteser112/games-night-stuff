@@ -6,7 +6,7 @@ import { Link, Container, Typography } from '@mui/material';
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 // routes
-import { PATH_AUTH } from '../../routes/paths';
+import { PATH_AUTH, PATH_PAGE } from '../../routes/paths';
 // components
 import Page from '../../components/Page';
 
@@ -83,11 +83,11 @@ export default function Register() {
 
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
               By registering, I agree to GamesNight&nbsp;
-              <Link underline="always" color="text.primary" href="#">
+              <Link component={RouterLink} to={PATH_PAGE.termsOfService} underline="always" color="text.primary">
                 Terms of Service
               </Link>
-              and
-              <Link underline="always" color="text.primary" href="#">
+              &nbsp;and&nbsp;
+              <Link component={RouterLink} to={PATH_PAGE.privacy} underline="always" color="text.primary">
                 Privacy Policy
               </Link>
               .
