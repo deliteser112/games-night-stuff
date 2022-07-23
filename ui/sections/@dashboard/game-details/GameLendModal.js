@@ -114,8 +114,6 @@ export default function GameLendModal({ isOpen, gameId, onCloseDialog }) {
   const handleSubmit = () => {
     const mutate = loanGameToUser;
 
-    console.log('KK:', selectedFriend);
-
     const { _id } = selectedFriend;
     if (_id) {
       mutate({

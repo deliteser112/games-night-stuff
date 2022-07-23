@@ -39,21 +39,17 @@ export default function LoanedTo() {
 
   useEffect(() => {
     if (tmpUser && tmpGames.length > 0 && tmpUsers.length > 0) {
-      console.log(tmpUser);
       const { loanedTo } = tmpUser;
 
       if (loanedTo && loanedTo.length > 0) {
-        console.log(loanedTo);
         const gameList = loanedTo.map((game) => {
           const gameInfo = tmpGames.find(({ _id }) => game._id === _id);
           const userInfo = tmpUsers.find(({ _id }) => game.userId === _id);
 
           // console.log(gameInfo, userInfo, game, tmpUsers)
-          console.log(game);
           const { name, _id } = userInfo;
           return { ...gameInfo, name, userId: _id };
         });
-        console.log(gameList);
         setGames(gameList);
       }
     }

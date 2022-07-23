@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Button, Box, Container, Typography, Stack } from '@mui/material';
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_AUTH } from '../../routes/paths';
 // components
 import Iconify from '../../components/Iconify';
 import { varFade } from '../../components/animate';
@@ -90,8 +90,9 @@ export default function HomeHero() {
               <ButtonStyle
                 size="large"
                 variant="contained"
+                rel="noopener"
                 component={RouterLink}
-                to={PATH_DASHBOARD.root}
+                to={PATH_AUTH.register}
                 endIcon={<Iconify icon="bi:box-arrow-in-up-right" width={20} height={20} />}
               >
                 Join Now

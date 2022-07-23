@@ -1,6 +1,4 @@
-import sumBy from 'lodash/sumBy';
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useTheme } from '@mui/material/styles';
 
@@ -16,7 +14,6 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 import Scrollbar from '../../../components/Scrollbar';
 import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
-import Iconify from '../../../components/Iconify';
 
 // sections
 import GameList from './GameList';
@@ -49,11 +46,24 @@ export default function Games() {
 
   const theme = useTheme();
 
+  const [sitchlist, setItchList] = useState([]);
+  const [swishlist, setWishList] = useState([]);
+  const [sownlist, setOwnList] = useState([]);
+
   const { loading, data } = useQuery(gamesQuery);
   const games = (data && data.games) || [];
 
   const userData = useQuery(userQuery).data;
   const tmpUser = userData && userData.user;
+
+  useEffect(() => {
+    if (tmpUser) {
+      const { itchlist, wishlist, ownlist } = tmpUser;
+      setItchList(itchlist || []);
+      setWishList(wishlist || []);
+      setOwnList(ownlist || []);
+    }
+  }, [tmpUser]);
 
   const handleOwnList = (status, _id) => {
     const mutate = status ? addGameToOwnlist : removeGameFromOwnlist;
@@ -88,6 +98,8 @@ export default function Games() {
     });
   };
 
+  const getPercentByGames = (total, sub) => (sub / total) * 100;
+
   return (
     <Page title="Games">
       <Container maxWidth="lg">
@@ -108,32 +120,32 @@ export default function Games() {
                 total={games.length}
                 percent={100}
                 price={1205}
-                icon="ic:round-receipt"
+                icon="carbon:cost-total"
                 color={theme.palette.info.main}
               />
               <GameAnalytic
                 title="Itchlist"
-                total={14}
-                percent={20}
+                total={sitchlist.length}
+                percent={getPercentByGames(games.length, sitchlist.length)}
                 price={222}
-                icon="eva:checkmark-circle-2-fill"
-                color={theme.palette.success.main}
+                icon="emojione-v1:shooting-star"
+                color={theme.palette.primary.main}
               />
               <GameAnalytic
                 title="Wishlist"
-                total={6}
-                percent={33}
+                total={swishlist.length}
+                percent={getPercentByGames(games.length, swishlist.length)}
                 price={365}
-                icon="eva:clock-fill"
-                color={theme.palette.warning.main}
+                icon="emojione:heart-with-ribbon"
+                color={theme.palette.error.main}
               />
               <GameAnalytic
                 title="Ownlist"
-                total={6}
-                percent={33}
+                total={sownlist.length}
+                percent={getPercentByGames(games.length, sownlist.length)}
                 price={42}
-                icon="eva:bell-fill"
-                color={theme.palette.error.main}
+                icon="emojione-v1:thumbs-down"
+                color={theme.palette.warning.main}
               />
             </Stack>
           </Scrollbar>

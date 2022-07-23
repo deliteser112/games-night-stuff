@@ -47,12 +47,12 @@ export default function GameAnalytic({ title, total, icon, color, percent, price
           </Box>
         </Typography>
 
-        <Typography variant="subtitle2">
+        {/* <Typography variant="subtitle2">
           {fShortenNumber(price)}{' '}
           <Box component="span" sx={{ color, typography: 'body2' }}>
             players
           </Box>
-        </Typography>
+        </Typography> */}
       </Stack>
     </Stack>
   );
