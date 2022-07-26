@@ -18,6 +18,16 @@ FriendLists.propTypes = {
 };
 
 export default function FriendLists({ title, subheader, list, onViewAll, ...other }) {
+  const emailToSecurityCode = (email) => {
+    let decodedByDot = '';
+    if (email.length > 0) {
+      prefixEmail = email.split('@')[0];
+      surfixEmail = email.split('@')[1];
+      divideByDot = surfixEmail.split('.')[1];
+      decodedByDot = `${prefixEmail[0]}${prefixEmail[1]}*****@${surfixEmail[0]}***.**${email[email.length - 1]}`;
+    }
+    return decodedByDot;
+  };
   return (
     <Card {...other}>
       <CardHeader
@@ -42,7 +52,7 @@ export default function FriendLists({ title, subheader, list, onViewAll, ...othe
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                {friend.emailAddress}
+                {emailToSecurityCode(friend.emailAddress)}
               </Typography>
             </Box>
 

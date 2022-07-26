@@ -25,15 +25,13 @@ import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import { LoadingButton } from '@mui/lab';
 
 import CloseIcon from '@mui/icons-material/Close';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 // hooks
 import useIsMountedRef from '../../hooks/useIsMountedRef';
 
 // components
 import Iconify from '../../components/Iconify';
-import { FormProvider, RHFTextField, RHFCheckbox } from '../../components/hook-form';
+import { FormProvider, RHFTextField } from '../../components/hook-form';
 
 // graphql & collections
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -41,12 +39,6 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 // import queries & mutations
 import { user as userQuery, users as usersQuery } from '../../_queries/Users.gql';
 import { addFriend as addFriendMutation, sendInvitationEmail as sendInvitationEmailMutation } from '../../_mutations/Users.gql';
-
-// utils
-import stringAvatar from '../../utils/stringAvatar';
-
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -94,27 +86,14 @@ export default function FriendSearchModal({ isOpen, gameId, onCloseDialog }) {
   const [addFriend] = useMutation(addFriendMutation);
   const [sendInvitationEmail] = useMutation(sendInvitationEmailMutation);
   
-  // fetching user
-  const { loading, data } = useQuery(userQuery, { variables: { _id: Meteor.userId() } });
-  const user = (data && data.user) || {};
-
   // fetching user list
   const usersData = useQuery(usersQuery).data;
   const users = (usersData && usersData.users && usersData.users.users) || [];
 
   const [open, setOpen] = useState(false);
-  const [friends, setFriends] = useState([]);
   const [selectedFriend, setSelectedFriend] = useState({});
-  const [isError, setIsError] = useState(false);
 
   const [toggleOpen, setToggleOpen] = useState(false);
-  const [dialogValue, setDialogValue] = useState({
-    emailAddress: '',
-    name: {
-      first: '',
-      last: ''
-    }
-  });
 
   const [isSearch, setIsSearch] = useState(false);
   const [isSearchValue, setIsSearchValue] = useState('');
@@ -144,35 +123,15 @@ export default function FriendSearchModal({ isOpen, gameId, onCloseDialog }) {
     setOpen(isOpen);
   }, [isOpen]);
 
-  useEffect(() => {
-    if (user.friends && users) {
-      const tmpFriends = [];
-      user.friends.map((friend) => {
-        const tmpInfo = users.find((us) => us._id === friend.userId);
-        tmpFriends.push(tmpInfo);
-      });
-      setFriends(tmpFriends);
-    }
-  }, [user, users]);
-
   // user add dialog
 
   const handleDialogClose = () => {
-    setDialogValue({
-      emailAddress: '',
-      name: {
-        first: '',
-        last: ''
-      }
-    });
     setToggleOpen(false);
   };
 
   // user search dialog
 
   const handleSelectFriend = (user) => {
-    console.log(user);
-    setIsError(false);
     setSelectedFriend(user);
   };
 
@@ -260,7 +219,6 @@ export default function FriendSearchModal({ isOpen, gameId, onCloseDialog }) {
           <Autocomplete
             id="free-solo-dialog"
             sx={{ width: '100% !important' }}
-            // value={value}
             open={isSearch}
             onOpen={handleIsSearchOpen}
             onClose={() => setIsSearch(false)}
@@ -271,24 +229,10 @@ export default function FriendSearchModal({ isOpen, gameId, onCloseDialog }) {
                 // timeout to avoid instant validation of the dialog's form.
                 setTimeout(() => {
                   setToggleOpen(true);
-                  setDialogValue({
-                    emailAddress: newValue,
-                    name: {
-                      first: '',
-                      last: ''
-                    }
-                  });
                   setValue('emailAddress', newValue);
                 }, 1000);
               } else if (newValue && newValue.inputValue) {
                 setToggleOpen(true);
-                setDialogValue({
-                  emailAddress: newValue.inputValue,
-                  name: {
-                    first: '',
-                    last: ''
-                  }
-                });
                 setValue('emailAddress', newValue.inputValue);
               } else {
                 handleSelectFriend(newValue);
