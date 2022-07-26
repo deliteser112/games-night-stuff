@@ -9,6 +9,8 @@ import { PATH_AUTH } from '../../routes/paths';
 // components
 import Iconify from '../../components/Iconify';
 import { varFade } from '../../components/animate';
+// hooks
+import useResponsive from '../../hooks/useResponsive';
 
 // ----------------------------------------------------------------------
 
@@ -53,6 +55,8 @@ const ButtonStyle = styled(Button)({
 // ----------------------------------------------------------------------
 
 export default function HomeHero() {
+  const isDesktop = useResponsive('up', 'sm');
+  
   return (
     <Box>
       <RootStyle>
@@ -92,16 +96,15 @@ export default function HomeHero() {
                 variant="contained"
                 rel="noopener"
                 component={RouterLink}
-                to={PATH_AUTH.register}
+                to={isDesktop ? PATH_AUTH.register : PATH_AUTH.login}
                 endIcon={<Iconify icon="bi:box-arrow-in-up-right" width={20} height={20} />}
               >
-                Join Now
+                {isDesktop ? 'Join Now' : 'Sign In'}
               </ButtonStyle>
             </m.div>
           </ContentStyle>
         </Container>
       </RootStyle>
-      {/* <Box sx={{ height: { md: '100vh' } }} /> */}
     </Box>
   );
 }

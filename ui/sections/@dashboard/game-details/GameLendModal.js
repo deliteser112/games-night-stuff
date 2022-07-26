@@ -174,7 +174,7 @@ export default function GameLendModal({ isOpen, gameId, onCloseDialog }) {
                 helperText={isError ? 'Select your friend' : ''}
                 {...params}
                 label="Friend"
-                placeholder="Search your friend with email"
+                placeholder="Search your friend by email"
               />
             )}
           />

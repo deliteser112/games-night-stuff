@@ -19,7 +19,7 @@ import AccountPopover from '../dashboard/AccountPopover';
 //
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
-import navConfig from './MenuConfig';
+import { desktopMenuConfig, mobileMenuConfig } from './MenuConfig';
 
 // ----------------------------------------------------------------------
 
@@ -109,7 +109,7 @@ export default function MainHeader() {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
 
-          {isDesktop && user && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
+          {isDesktop && user && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={desktopMenuConfig} />}
           {isDesktop && (
             <>
               {user ? (
@@ -117,16 +117,16 @@ export default function MainHeader() {
               ) : (
                 <Stack direction="row" spacing={2}>
                   <LoginButtonStyle variant="outlined" size="small" rel="noopener" href={PATH_AUTH.login}>
-                    Login
+                    Sign In
                   </LoginButtonStyle>
                   <RegisterButtonStyle variant="contained" size="small" rel="noopener" href={PATH_AUTH.register}>
-                    Register
+                    Sign Up
                   </RegisterButtonStyle>
                 </Stack>
               )}
             </>
           )}
-          {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
+          {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={mobileMenuConfig} />}
         </Container>
       </ToolbarStyle>
 

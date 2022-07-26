@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { Box, Grid, Card, Button, Avatar, Typography } from '@mui/material';
 // components
 import Iconify from '../../components/Iconify';
+import EmptyContent from '../../components/EmptyContent';
+// sections
+import FriendSearchModal from './FriendSearchModal';
 
 // utils
 import stringAvatar from '../../utils/stringAvatar';
@@ -23,19 +26,46 @@ ProfileFriends.propTypes = {
 };
 
 export default function ProfileFriends({ users, friends }) {
+  const [friendModalOpen, setFriendModalOpen] = useState(false);
+  const [friendsFromUsers, setFriendsFromUsers] = useState([]);
+
+  useEffect(() => {
+    if (users && friends && friends.length > 0) {
+      const tmpFriends = friends.map((user) => users.find((uw) => uw._id === user.userId));
+      setFriendsFromUsers(tmpFriends);
+    }
+  }, [friends, users]);
+
   return (
     <Box sx={{ mt: 5 }}>
-      <Typography variant="h4" sx={{ mb: 3 }}>
-        Friends
-      </Typography>
+      <FriendSearchModal isOpen={friendModalOpen} onCloseDialog={() => setFriendModalOpen(false)} />
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 4 }}>
+        <Typography variant="h4">Your Friends</Typography>
+        <Button
+          variant="contained"
+          onClick={() => setFriendModalOpen(true)}
+          startIcon={<Iconify icon={'ant-design:plus-outlined'} />}
+        >
+          Add friend
+        </Button>
+      </Box>
 
-      <Grid container spacing={3}>
-        {users.map((user) => (
-          <Grid key={user._id} item xs={12} md={4}>
-            <FollowerCard user={user} friends={friends} />
-          </Grid>
-        ))}
-      </Grid>
+      {friendsFromUsers.length > 0 ? (
+        <Grid container spacing={3}>
+          {friendsFromUsers.map((user) => (
+            <Grid key={user._id} item xs={12} md={4}>
+              <FollowerCard user={user} />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <EmptyContent
+          title="No added friend"
+          sx={{
+            '& span.MuiBox-root': { height: 160 }
+          }}
+        />
+      )}
     </Box>
   );
 }
@@ -43,24 +73,16 @@ export default function ProfileFriends({ users, friends }) {
 // ----------------------------------------------------------------------
 
 FollowerCard.propTypes = {
-  user: PropTypes.object,
-  friends: PropTypes.array
+  user: PropTypes.object
 };
 
-function FollowerCard({ user, friends }) {
+function FollowerCard({ user }) {
   const [addFriend] = useMutation(addFriendMutation);
   const [removeFriend] = useMutation(removeFriendMutation);
 
   const { _id, name, emailAddress } = user;
 
-  const [toggle, setToogle] = useState(false);
-
-  useEffect(() => {
-    if (friends && friends.length > 0) {
-      const isFriend = friends.find((fw) => fw.userId === _id);
-      setToogle(isFriend);
-    }
-  }, [friends]);
+  const [toggle, setToggle] = useState(true);
 
   const handleAddOrRemoveFriend = (status) => {
     const mutate = status ? addFriend : removeFriend;
@@ -71,7 +93,18 @@ function FollowerCard({ user, friends }) {
       },
       refetchQueries: [{ query: userQuery }]
     });
-    setToogle(status);
+    setToggle(status);
+  };
+
+  const emailToSecurityCode = (email) => {
+    let decodedByDot = '';
+    if (email.length > 0) {
+      prefixEmail = email.split('@')[0];
+      surfixEmail = email.split('@')[1];
+      divideByDot = surfixEmail.split('.')[1];
+      decodedByDot = `${prefixEmail[0]}${prefixEmail[1]}*****@${surfixEmail[0]}***.**${email[email.length - 1]}`;
+    }
+    return decodedByDot;
   };
 
   return (
@@ -84,7 +117,7 @@ function FollowerCard({ user, friends }) {
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Iconify icon={'codicon:mail'} sx={{ width: 16, height: 16, mr: 0.5, flexShrink: 0 }} />
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {emailAddress}
+            {emailToSecurityCode(emailAddress)}
           </Typography>
         </Box>
       </Box>

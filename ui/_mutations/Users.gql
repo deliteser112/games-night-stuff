@@ -24,6 +24,12 @@ mutation sendWelcomeEmail {
   }
 }
 
+mutation sendInvitationEmail($emailAddress: String) {
+  sendInvitationEmail(emailAddress: $emailAddress) {
+    _id
+  }
+}
+
 mutation addGameToWishlist($_id: String) {
   addGameToWishlist(_id: $_id) {
     _id

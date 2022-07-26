@@ -18,8 +18,8 @@ import AuthSocial from '../../sections/auth/OAuthSocial';
 
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
-    display: 'flex',
-  },
+    display: 'flex'
+  }
 }));
 
 const HeaderStyle = styled('header')(({ theme }) => ({
@@ -34,8 +34,8 @@ const HeaderStyle = styled('header')(({ theme }) => ({
   justifyContent: 'flex-end',
   [theme.breakpoints.up('md')]: {
     alignItems: 'flex-start',
-    padding: theme.spacing(7, 5, 0, 7),
-  },
+    padding: theme.spacing(7, 5, 0, 7)
+  }
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -45,7 +45,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
-  padding: theme.spacing(12, 0),
+  padding: theme.spacing(12, 0)
 }));
 
 // ----------------------------------------------------------------------
@@ -59,9 +59,9 @@ export default function Login() {
         <HeaderStyle>
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Don’t have an account?
+              Not a member yet.&nbsp;
               <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
-                Get started
+                Register here
               </Link>
             </Typography>
           )}
@@ -73,9 +73,7 @@ export default function Login() {
               Sign in to GamesNight
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-              Enter your details below.
-            </Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Enter your details below.</Typography>
 
             <AuthSocial />
 
@@ -83,9 +81,9 @@ export default function Login() {
 
             {!smUp && (
               <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-                Don’t have an account?{' '}
+                Not a member yet.&nbsp;
                 <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
-                  Get started
+                  Register here
                 </Link>
               </Typography>
             )}

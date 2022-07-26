@@ -1,7 +1,7 @@
 import React from 'react';
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
-import { Box, Stack, IconButton, Container, Typography, Link } from '@mui/material';
+import { Box, Stack, Container, Typography, Link } from '@mui/material';
 // components
 import Image from '../../components/Image';
 import Iconify from '../../components/Iconify';
@@ -31,13 +31,14 @@ const TextContainer = styled('div')(({ theme }) => ({
 const SocialContainer = styled('div')(({ theme }) => ({
   position: 'relative',
   left: 0,
-  width: '100%',
+  overflow: 'auto',
   [theme.breakpoints.up('md')]: {
     position: 'absolute',
     bottom: 0,
     left: '19%',
     width: 'auto',
-    transform: 'translate(0, 50%)'
+    transform: 'translate(0, 50%)',
+    width: '100%',
   }
 }));
 

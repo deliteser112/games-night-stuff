@@ -7,8 +7,11 @@ import templateToText from '../../../modules/server/handlebarsEmailToText';
 const { emailTemplates } = Accounts;
 const { productName } = Meteor.settings.public;
 
+const supportEmail = 'care@gamesnight.fun';
+
 emailTemplates.siteName = productName;
-emailTemplates.from = Meteor.settings.private.supportEmail;
+emailTemplates.from = supportEmail;
+// emailTemplates.from = Meteor.settings.private.supportEmail;
 
 emailTemplates.verifyEmail = {
   subject() {

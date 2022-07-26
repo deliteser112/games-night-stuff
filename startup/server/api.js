@@ -122,6 +122,7 @@ const schema = {
       removeUserSetting(_id: String!): UserSetting
       sendVerificationEmail: User
       sendWelcomeEmail: User
+      sendInvitationEmail(emailAddress: String): User
     }
 
     type Subscription {
