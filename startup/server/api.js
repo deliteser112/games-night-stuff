@@ -63,6 +63,7 @@ const schema = {
       paginateGames(skip: Int, limit: Int): [Game]
       game(_id: String): Game
       findGameByKeywords(keywords: String): [Game]
+      findGamesByIds(_ids: [String]): [Game]
 
       ratings: [Rating]
       wishes: [Wish]

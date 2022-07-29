@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
+// react-graphql
+import { useQuery } from '@apollo/react-hooks';
+
 // @mui
 import {
   Box,
   Card,
   Table,
   Switch,
-  Tooltip,
   TableBody,
-  IconButton,
   TableContainer,
   TablePagination,
   FormControlLabel
 } from '@mui/material';
 // hooks
-import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
+import useTable, { emptyRows } from '../../../hooks/useTable';
 // components
-import Iconify from '../../../components/Iconify';
 import Scrollbar from '../../../components/Scrollbar';
 
 import {
@@ -28,6 +28,9 @@ import {
 
 // sections
 import { GameTableRow, GameTableToolbar } from '../../../sections/@dashboard/game-list';
+
+// queries
+import { findGameByKeywords as findGameByKeywordsQuery } from '../../../_queries/Games.gql';
 
 // ----------------------------------------------------------------------
 
@@ -62,40 +65,52 @@ export default function GameList({ isLoading, gameList, user, onWishList, onItch
     defaultOrderBy: 'title'
   });
 
-  const [tableData, setTableData] = useState([]);
+  const [totalGamesCount, setTotalGamesCount] = useState(0);
+
+  const [filteredGames, setFilteredGames] = useState([]);
+  const [filter, setFilter] = useState('');
 
   const [filterName, setFilterName] = useState('');
 
+  const fGBKQ = useQuery(findGameByKeywordsQuery, {
+    variables: { keywords: filter }
+  }).data;
+
   useEffect(() => {
-    if (gameList.length) {
-      setTableData(gameList);
+    if (filterName === '') {
+      setFilter(filterName);
     }
-  }, [gameList]);
+  }, [filterName]);
+
+  useEffect(() => {
+    if (gameList.length > 0 && filter === '') {
+      setFilteredGames(gameList);
+      setTotalGamesCount(gameList.length);
+    }
+  }, [gameList, filter]);
+
+  useEffect(() => {
+    if (fGBKQ && filter !== '') {
+      const { findGameByKeywords } = fGBKQ;
+      setFilteredGames(findGameByKeywords);
+      setTotalGamesCount(findGameByKeywords.length);
+    }
+  }, [fGBKQ, filter]);
 
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
     setPage(0);
   };
 
-  const handleDeleteRows = (selected) => {
-    const deleteRows = tableData.filter((row) => !selected.includes(row._id));
-    setSelected([]);
-    setTableData(deleteRows);
+  const handleFilterData = () => {
+    setFilter(filterName);
   };
-
-  const dataFiltered = applySortFilter({
-    tableData,
-    comparator: getComparator(order, orderBy),
-    filterName
-  });
 
   const denseHeight = dense ? 60 : 80;
 
-  const isNotFound = (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length);
-
   return (
     <Card>
-      <GameTableToolbar filterName={filterName} onFilterName={handleFilterName} />
+      <GameTableToolbar filterName={filterName} onFilterName={handleFilterName} onFilterData={handleFilterData} />
 
       <Scrollbar>
         <TableContainer sx={{ minWidth: 960, position: 'relative' }}>
@@ -103,19 +118,12 @@ export default function GameList({ isLoading, gameList, user, onWishList, onItch
             <TableSelectedActions
               dense={dense}
               numSelected={selected.length}
-              rowCount={tableData.length}
+              rowCount={filteredGames.length}
               onSelectAllRows={(checked) =>
                 onSelectAllRows(
                   checked,
-                  tableData.map((row) => row._id)
+                  filteredGames.map((row) => row._id)
                 )
-              }
-              actions={
-                <Tooltip title="Delete">
-                  <IconButton color="primary" onClick={() => handleDeleteRows(selected)}>
-                    <Iconify icon={'eva:trash-2-outline'} />
-                  </IconButton>
-                </Tooltip>
               }
             />
           )}
@@ -125,19 +133,19 @@ export default function GameList({ isLoading, gameList, user, onWishList, onItch
               order={order}
               orderBy={orderBy}
               headLabel={TABLE_HEAD}
-              rowCount={tableData.length}
+              rowCount={filteredGames.length}
               numSelected={selected.length}
               onSort={onSort}
               onSelectAllRows={(checked) =>
                 onSelectAllRows(
                   checked,
-                  tableData.map((row) => row._id)
+                  filteredGames.map((row) => row._id)
                 )
               }
             />
 
             <TableBody>
-              {(isLoading ? [...Array(rowsPerPage)] : dataFiltered)
+              {filteredGames
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) =>
                   row ? (
@@ -152,13 +160,13 @@ export default function GameList({ isLoading, gameList, user, onWishList, onItch
                       onItchList={(status) => onItchList(status, row._id)}
                     />
                   ) : (
-                    !isNotFound && <TableSkeleton key={index} sx={{ height: denseHeight }} />
+                    !isLoading && <TableSkeleton key={index} sx={{ height: denseHeight }} />
                   )
                 )}
 
-              <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, tableData.length)} />
+              <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, filteredGames.length)} />
 
-              <TableNoData isNotFound={isNotFound} />
+              <TableNoData isNotFound={totalGamesCount === 0} />
             </TableBody>
           </Table>
         </TableContainer>
@@ -168,7 +176,7 @@ export default function GameList({ isLoading, gameList, user, onWishList, onItch
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={dataFiltered.length}
+          count={filteredGames.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={onChangePage}
@@ -183,24 +191,4 @@ export default function GameList({ isLoading, gameList, user, onWishList, onItch
       </Box>
     </Card>
   );
-}
-
-// ----------------------------------------------------------------------
-
-function applySortFilter({ tableData, comparator, filterName }) {
-  const stabilizedThis = tableData.map((el, index) => [el, index]);
-
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-
-  tableData = stabilizedThis.map((el) => el[0]);
-
-  if (filterName) {
-    tableData = tableData.filter((item) => item.title.toLowerCase().indexOf(filterName.toLowerCase()) !== -1);
-  }
-
-  return tableData;
 }

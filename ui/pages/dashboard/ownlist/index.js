@@ -13,10 +13,10 @@ import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 
 // sections
-import GameList from './GameList';
+import { GameList } from '../../../sections/@dashboard/my-list';
 
 // queries
-import { games as gamesQuery } from '../../../_queries/Games.gql';
+import { findGamesByIds as findGamesByIdsQuery } from '../../../_queries/Games.gql';
 import { user as userQuery } from '../../../_queries/Users.gql';
 
 // mutations
@@ -40,28 +40,37 @@ export default function OwnList() {
   const [addGameToOwnlist] = useMutation(addGameToOwnlistMutation);
   const [removeGameFromOwnlist] = useMutation(removeGameFromOwnlistMutation);
 
+  const [gameIds, setGameIds] = useState([]);
   const [games, setGames] = useState([]);
   const [userName, setUserName] = useState('');
 
-  const { loading, data } = useQuery(gamesQuery);
-  const tmpGames = (data && data.games) || [];
+  const gamesData = useQuery(findGamesByIdsQuery, { variables: { _ids: gameIds } }).data;
 
-  const userData = useQuery(userQuery).data;
-  const tmpUser = userData && userData.user;
+  const { loading, data } = useQuery(userQuery);
+  const tmpUser = data && data.user;
 
   useEffect(() => {
-    if (tmpUser && tmpGames.length > 0) {
+    if (gamesData) {
+      const { findGamesByIds } = gamesData;
+      setGames(findGamesByIds);
+    }
+  }, [gamesData]);
+
+  useEffect(() => {
+    if (tmpUser) {
       const tmpName = tmpUser.name.first || '';
       setUserName(tmpName);
+
       const { ownlist } = tmpUser;
       if (ownlist && ownlist.length > 0) {
-        const gameList = ownlist.map((gameId) => {
-          return tmpGames.find(({ _id }) => gameId === _id);
-        })
-        setGames(gameList);
+        const ids = [];
+        ownlist.forEach((gameId) => {
+          ids.push(gameId);
+        });
+        setGameIds(ids);
       }
     }
-  }, [tmpUser, tmpGames]);
+  }, [loading, tmpUser]);
 
   const handleOwnList = (status, _id) => {
     const mutate = status ? addGameToOwnlist : removeGameFromOwnlist;

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 // import queries
 import { useQuery, useMutation } from '@apollo/react-hooks';
+
+import { useTracker } from 'meteor/react-meteor-data';
+
 // @mui
 import { Container } from '@mui/material';
 
@@ -13,10 +16,10 @@ import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 
 // sections
-import GameList from './GameList';
+import { GameList } from '../../../sections/@dashboard/my-list';
 
 // queries
-import { games as gamesQuery } from '../../../_queries/Games.gql';
+import { findGamesByIds as findGamesByIdsQuery } from '../../../_queries/Games.gql';
 import { user as userQuery } from '../../../_queries/Users.gql';
 
 // mutations
@@ -40,28 +43,37 @@ export default function ItchList() {
   const [addGameToOwnlist] = useMutation(addGameToOwnlistMutation);
   const [removeGameFromOwnlist] = useMutation(removeGameFromOwnlistMutation);
 
+  const [gameIds, setGameIds] = useState([]);
   const [games, setGames] = useState([]);
   const [userName, setUserName] = useState('');
 
-  const { loading, data } = useQuery(gamesQuery);
-  const tmpGames = (data && data.games) || [];
-
-  const userData = useQuery(userQuery).data;
-  const tmpUser = userData && userData.user;
+  const gamesData = useQuery(findGamesByIdsQuery, { variables: { _ids: gameIds } }).data;
+  
+  const {loading, data} = useQuery(userQuery);
+  const tmpUser = data && data.user;
 
   useEffect(() => {
-    if (tmpUser && tmpGames.length > 0) {
+    if (gamesData) {
+      const { findGamesByIds } = gamesData;
+      setGames(findGamesByIds);
+    }
+  }, [gamesData]);
+
+  useEffect(() => {
+    if (tmpUser) {
       const tmpName = tmpUser.name.first || '';
       setUserName(tmpName);
+
       const { itchlist } = tmpUser;
       if (itchlist && itchlist.length > 0) {
-        const gameList = itchlist.map((gameId) => {
-          return tmpGames.find(({ _id }) => gameId === _id);
-        })
-        setGames(gameList);
+        const ids = [];
+        itchlist.forEach((gameId) => {
+          ids.push(gameId);
+        });
+        setGameIds(ids);
       }
     }
-  }, [tmpUser, tmpGames]);
+  }, [loading, tmpUser]);
 
   const handleOwnList = (status, _id) => {
     const mutate = status ? addGameToOwnlist : removeGameFromOwnlist;
@@ -105,7 +117,7 @@ export default function ItchList() {
         />
 
         <GameList
-          isLoading={loading}
+          loading={loading}
           gameList={games}
           user={tmpUser}
           onOwnList={(status, _id) => handleOwnList(status, _id)}

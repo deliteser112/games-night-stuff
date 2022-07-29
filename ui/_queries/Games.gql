@@ -16,6 +16,24 @@ query games {
   }
 }
 
+query findGamesByIds($_ids: [String]) {
+  findGamesByIds(_ids: $_ids) {
+    _id
+    bggid
+    title
+    minPlayers
+    maxPlayers
+    playingTime
+    minPlaytime
+    maxPlaytime
+    age
+    description
+    thumbnail
+    image
+    yearPublished
+  }
+}
+
 query findGameByKeywords($keywords: String) {
   findGameByKeywords(keywords: $keywords) {
     _id

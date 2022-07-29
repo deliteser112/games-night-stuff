@@ -18,7 +18,7 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 import { useQuery } from '@apollo/react-hooks';
 
 // queries
-import { games as gamesQuery } from '../../_queries/Games.gql';
+import { totalGamesCount as totalGamesCountQuery } from '../../_queries/Games.gql';
 import { user as userQuery, users as usersQuery } from '../../_queries/Users.gql';
 
 // ----------------------------------------------------------------------
@@ -37,8 +37,7 @@ export default function GeneralApp() {
 
   const [viewCount, setViewCount] = useState(-4);
 
-  const { data } = useQuery(gamesQuery);
-  const games = (data && data.games) || [];
+  const gamesCount = useQuery(totalGamesCountQuery).data;
 
   const userData = useQuery(userQuery).data;
   const tmpUser = userData && userData.user;
@@ -108,7 +107,7 @@ export default function GeneralApp() {
             <AppWidgetSummary
               title="Total Games"
               percent={0.2}
-              total={games.length}
+              total={gamesCount && gamesCount.totalGamesCount || 0}
               chartColor={theme.palette.chart.blue[0]}
               chartData={[20, 41, 63, 33, 28, 35, 50, 46, 11, 26]}
             />

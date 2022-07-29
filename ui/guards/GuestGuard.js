@@ -11,7 +11,6 @@ import useAuth from '../hooks/useAuth';
 // ----------------------------------------------------------------------
 
 export default function GuestGuard({ children }) {
-  // const isAuthenticated = useTracker(() => Meteor.user());
   const { isAuthenticated } = useAuth();
   if (isAuthenticated) {
     return <Navigate to={PATH_DASHBOARD.root} />;

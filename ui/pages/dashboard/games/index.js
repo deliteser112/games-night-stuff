@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useTheme } from '@mui/material/styles';
 
-// import queries
+// react-graphql
 import { useQuery, useMutation } from '@apollo/react-hooks';
 // @mui
 import { Divider, Container, Stack, Card } from '@mui/material';
@@ -20,7 +20,7 @@ import GameList from './GameList';
 import GameAnalytic from './GameAnalytic';
 
 // queries
-import { games as gamesQuery } from '../../../_queries/Games.gql';
+import { totalGamesCount as totalGamesCountQuery } from '../../../_queries/Games.gql';
 import { user as userQuery } from '../../../_queries/Users.gql';
 
 // mutations
@@ -50,11 +50,18 @@ export default function Games() {
   const [swishlist, setWishList] = useState([]);
   const [sownlist, setOwnList] = useState([]);
 
-  const { loading, data } = useQuery(gamesQuery);
-  const games = (data && data.games) || [];
+  const [totalGamesCount, setTotalGamesCount] = useState(0);
+
+  const gamesCount = useQuery(totalGamesCountQuery).data;
 
   const userData = useQuery(userQuery).data;
   const tmpUser = userData && userData.user;
+
+  useEffect(() => {
+    if (gamesCount) {
+      setTotalGamesCount(gamesCount.totalGamesCount);
+    }
+  }, [gamesCount]);
 
   useEffect(() => {
     if (tmpUser) {
@@ -117,7 +124,7 @@ export default function Games() {
             >
               <GameAnalytic
                 title="Total"
-                total={games.length}
+                total={totalGamesCount}
                 percent={100}
                 price={1205}
                 icon="carbon:cost-total"
@@ -126,7 +133,7 @@ export default function Games() {
               <GameAnalytic
                 title="Itchlist"
                 total={sitchlist.length}
-                percent={getPercentByGames(games.length, sitchlist.length)}
+                percent={getPercentByGames(totalGamesCount, sitchlist.length)}
                 price={222}
                 icon="emojione-v1:shooting-star"
                 color={theme.palette.primary.main}
@@ -134,7 +141,7 @@ export default function Games() {
               <GameAnalytic
                 title="Wishlist"
                 total={swishlist.length}
-                percent={getPercentByGames(games.length, swishlist.length)}
+                percent={getPercentByGames(totalGamesCount, swishlist.length)}
                 price={365}
                 icon="emojione:heart-with-ribbon"
                 color={theme.palette.error.main}
@@ -142,7 +149,7 @@ export default function Games() {
               <GameAnalytic
                 title="Ownlist"
                 total={sownlist.length}
-                percent={getPercentByGames(games.length, sownlist.length)}
+                percent={getPercentByGames(totalGamesCount, sownlist.length)}
                 price={42}
                 icon="emojione-v1:thumbs-down"
                 color={theme.palette.warning.main}
@@ -151,8 +158,7 @@ export default function Games() {
           </Scrollbar>
         </Card>
         <GameList
-          isLoading={loading}
-          gameList={games}
+          totalCount={totalGamesCount}
           user={tmpUser}
           onOwnList={(status, _id) => handleOwnList(status, _id)}
           onWishList={(status, _id) => handleWishList(status, _id)}

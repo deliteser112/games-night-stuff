@@ -5,18 +5,32 @@ export default {
   games: async (parent, args, context) => {
     return Games.find().fetch();
   },
-  totalGamesCount: () => Games.find().count(),
-  paginateGames: (parent, args) => Games.find({}, { skip: args.skip, limit: args.limit }).fetch(),
+  totalGamesCount: async () => Games.find().count(),
+  paginateGames: async (parent, args) => Games.find({}, { skip: args.skip, limit: args.limit }).fetch(),
   game: async (parent, args) => {
+    const _id = new Mongo.ObjectID(args._id);
     try {
-      return Games.findOne({ _id: new Mongo.ObjectID(args._id) });
+      return Games.findOne({ _id });
     } catch (e) {
       return null;
     }
   },
-  findGameByKeywords: (parent, args) => {
+  findGamesByIds: async (parent, args) => {
+    const gameIds = [];
+    args._ids.map((id) => gameIds.push(new Mongo.ObjectID(id)));
     try {
-      return Games.find({ title: { $regex: args.keywords, $options: 'i' } });
+      return Games.find({ _id: { $in: gameIds } });
+    } catch (e) {
+      return null;
+    }
+  },
+  findGameByKeywords: async (parent, args) => {
+    try {
+      if (args.keywords != '') {
+        return Games.find({ title: { $regex: args.keywords, $options: 'i' } });
+      } else {
+        return [];
+      }
     } catch (e) {
       return null;
     }

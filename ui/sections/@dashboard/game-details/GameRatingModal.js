@@ -25,8 +25,6 @@ import {
 
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useTracker } from 'meteor/react-meteor-data';
-
 // graphql & collections
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
