@@ -20,10 +20,6 @@ import PrivacyPolicy from '../pages/other/PrivacyPolicy';
 import GeneralApp from '../pages/dashboard/GeneralApp';
 import Page404 from '../pages/other/Page404';
 
-// documents
-import Documents from '../pages/dashboard/document';
-import DocumentCreate from '../pages/dashboard/document/DocumentCreate';
-
 // games
 import Games from '../pages/dashboard/games';
 import GameDetails from '../pages/dashboard/games/GameDetails';
@@ -74,11 +70,6 @@ export default function Router() {
         { path: '/', element: <Navigate to="/dashboard/analytics" /> },
         { path: 'profile/:userId', element: <Profile /> },
         { path: 'analytics', element: <GeneralApp /> },
-
-        // documents
-        { path: 'documents', element: <Documents /> },
-        { path: 'documents/create', element: <DocumentCreate /> },
-        { path: 'documents/:documentId/edit', element: <DocumentCreate /> },
 
         // games
         { path: 'games', element: <Games /> },

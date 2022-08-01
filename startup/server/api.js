@@ -9,14 +9,6 @@ import UserSettingsTypes from '../../api/UserSettings/types';
 import UserSettingsQueries from '../../api/UserSettings/queries';
 import UserSettingsMutations from '../../api/UserSettings/mutations';
 
-import DocumentTypes from '../../api/Documents/types';
-import DocumentQueries from '../../api/Documents/queries';
-import DocumentMutations from '../../api/Documents/mutations';
-
-import CommentTypes from '../../api/Comments/types';
-import CommentQueries from '../../api/Comments/queries';
-import CommentMutations from '../../api/Comments/mutations';
-
 // Games
 
 import GameTypes from '../../api/Games/types';
@@ -36,7 +28,6 @@ import SubscribersMutations from '../../api/Subscribers/mutations';
 
 import OAuthQueries from '../../api/OAuth/queries';
 
-import '../../api/Documents/server/indexes';
 import '../../api/webhooks';
 
 import '../../api/App/server/publications';
@@ -48,16 +39,10 @@ const schema = {
     ${WishesTypes}
     ${SubscribersTypes}
 
-    ${DocumentTypes}
-    ${CommentTypes}
-
     ${UserTypes}
     ${UserSettingsTypes}
 
     type Query {
-      documents: [Document]
-      document(_id: String): Document
-
       games: [Game]
       totalGamesCount: Int
       paginateGames(skip: Int, limit: Int): [Game]
@@ -81,14 +66,7 @@ const schema = {
     }
 
     type Mutation {
-      addDocument(title: String, body: String): Document
-      updateDocument(_id: String!, title: String, body: String, isPublic: Boolean): Document
-      removeDocument(_id: String!): Document
-      addComment(documentId: String!, comment: String!): Comment
-      removeComment(commentId: String!): Comment
-
       # games
-
       addGameToWishlist(_id: String): User
       removeGameFromWishlist(_id: String): User
       addGameToItchlist(_id: String): User
@@ -125,15 +103,9 @@ const schema = {
       sendWelcomeEmail: User
       sendInvitationEmail(emailAddress: String): User
     }
-
-    type Subscription {
-      commentAdded(documentId: String!): Comment
-    }
   `,
   resolvers: {
     Query: {
-      ...DocumentQueries,
-
       ...GameQueries,
       ...RatingQueries,
       ...WishesQueries,
@@ -144,22 +116,13 @@ const schema = {
       ...OAuthQueries,
     },
     Mutation: {
-      ...DocumentMutations,
-      ...CommentMutations,
-
       ...RatingMutations,
       ...WishesMutations,
       ...SubscribersMutations,
 
       ...UserMutations,
       ...UserSettingsMutations,
-    },
-    Document: {
-      comments: CommentQueries.comments,
-    },
-    Comment: {
-      user: UserQueries.user,
-    },
+    }
   },
 };
 

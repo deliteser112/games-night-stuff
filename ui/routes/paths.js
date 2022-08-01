@@ -40,10 +40,6 @@ export const PATH_DASHBOARD = {
   analytics: path(ROOTS_DASHBOARD, '/analytics'),
   profile: path(ROOTS_DASHBOARD, '/profile'),
 
-  // documents
-  documents: path(ROOTS_DASHBOARD, '/documents'),
-  documentCreate: path(ROOTS_DASHBOARD, '/documents/create'),
-
   // games
   games: path(ROOTS_DASHBOARD, '/games'),
 

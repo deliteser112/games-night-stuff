@@ -12,7 +12,7 @@ import {
   Card,
   CardContent,
   Stack,
-  Button,
+  Button
 } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -29,7 +29,7 @@ import userSettingsQuery from '../../../_queries/UserSettings.gql';
 import {
   addUserSetting as addUserSettingMutation,
   updateUserSetting as updateUserSettingMutation,
-  removeUserSetting as removeUserSettingMutation,
+  removeUserSetting as removeUserSettingMutation
 } from '../../../_mutations/UserSettings.gql';
 
 // components
@@ -72,15 +72,13 @@ export default function UserSettings() {
 
   const handleDeleteSetting = (settingId) => {
     if (
-      confirm(
-        "Are you sure? Before deleting this setting make sure that it's no longer in use in your application!",
-      )
+      confirm("Are you sure? Before deleting this setting make sure that it's no longer in use in your application!")
     ) {
       removeUserSetting({
         variables: {
-          _id: settingId,
+          _id: settingId
         },
-        refetchQueries: [{ query: userSettingsQuery }],
+        refetchQueries: [{ query: userSettingsQuery }]
       });
     }
   };
@@ -100,11 +98,7 @@ export default function UserSettings() {
           heading="User Settings"
           links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'User Settings' }]}
           action={
-            <Button
-              variant="contained"
-              startIcon={<Iconify icon="eva:plus-fill" />}
-              onClick={handleAddSetting}
-            >
+            <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleAddSetting}>
               Add Setting
             </Button>
           }
@@ -158,7 +152,7 @@ export default function UserSettings() {
               <EmptyContent
                 title="No Settings"
                 sx={{
-                  '& span.MuiBox-root': { height: 160 },
+                  '& span.MuiBox-root': { height: 160 }
                 }}
               />
             )}

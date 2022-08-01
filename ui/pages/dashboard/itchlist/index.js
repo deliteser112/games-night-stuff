@@ -121,7 +121,6 @@ export default function ItchList() {
           onOwnList={(status, _id) => handleOwnList(status, _id)}
           onWishList={(status, _id) => handleWishList(status, _id)}
           onItchList={(status, _id) => handleItchList(status, _id)}
-          onDelete={(id) => deleteDocument(id)}
         />
       </Container>
     </Page>

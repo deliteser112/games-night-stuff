@@ -1,8 +1,0 @@
-fragment DocumentAttributes on Document {
-  _id
-  isPublic
-  title
-  body
-  updatedAt
-  createdAt
-}
