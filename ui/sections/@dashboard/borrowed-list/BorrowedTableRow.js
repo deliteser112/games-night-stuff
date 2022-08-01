@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
-import { Link, TableRow, Checkbox, TableCell, Typography, MenuItem, Stack, Avatar, Chip, Tooltip } from '@mui/material';
+import { Link, TableRow, TableCell, Typography, Stack, Avatar } from '@mui/material';
 // components
 import Label from '../../../components/Label';
-import Iconify from '../../../components/Iconify';
-import { TableMoreMenu } from '../../../components/table';
 // utils
 import stringAvatar from '../../../utils/stringAvatar';
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -20,25 +18,11 @@ BorrowedTableRow.propTypes = {
   onShowReturnModal: PropTypes.func
 };
 
-export default function BorrowedTableRow({ row, selected, onSelectRow, onShowReturnModal }) {
+export default function BorrowedTableRow({ row, selected }) {
   const { _id, title, thumbnail, minPlaytime, maxPlaytime, minPlayers, maxPlayers, name } = row;
-
-  const [openMenu, setOpenMenuActions] = useState(null);
-
-  const handleOpenMenu = (event) => {
-    setOpenMenuActions(event.currentTarget);
-  };
-
-  const handleCloseMenu = () => {
-    setOpenMenuActions(null);
-  };
 
   return (
     <TableRow hover selected={selected}>
-      <TableCell padding="checkbox">
-        <Checkbox checked={selected} onClick={onSelectRow} />
-      </TableCell>
-
       <TableCell align="left">
         <Stack direction="row" alignItems="center" spacing={1}>
           <Avatar variant="square" {...stringAvatar(`${title} ' '`)} alt={title} src={thumbnail} />

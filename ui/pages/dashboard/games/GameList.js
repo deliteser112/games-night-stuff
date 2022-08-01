@@ -39,10 +39,10 @@ import {
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
+  { id: '' },
   { id: 'title', label: 'Title', align: 'left' },
   { id: 'timeToPlay', label: 'Time to play', align: 'left' },
-  { id: 'numberOfPlayers', label: 'Number of players', align: 'left' },
-  { id: '' }
+  { id: 'numberOfPlayers', label: 'Number of players', align: 'right' }
 ];
 
 // ----------------------------------------------------------------------
@@ -57,7 +57,6 @@ export default function GameList({ totalCount, user, onWishList, onItchList, onO
     setPage,
     //
     selected,
-    setSelected,
     onSelectRow,
     onSelectAllRows,
     //

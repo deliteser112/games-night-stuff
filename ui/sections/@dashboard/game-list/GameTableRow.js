@@ -64,58 +64,6 @@ export default function GameTableRow({ user, row, selected, onWishList, onOwnLis
   return (
     <TableRow hover selected={selected}>
       <TableCell padding="checkbox">
-        <Checkbox checked={selected} onClick={onSelectRow} />
-      </TableCell>
-
-      <TableCell align="left">
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <Avatar variant="square" {...stringAvatar(`${title} ' '`)} alt={title} src={thumbnail} />
-          <Link
-            underline="hover"
-            variant="subtitle2"
-            component={RouterLink}
-            color="text.secondary"
-            to={`${PATH_DASHBOARD.games}/${_id}`}
-          >
-            <Typography variant="subtitle2" noWrap>
-              {title}
-            </Typography>
-          </Link>
-          {wishListStatus && (
-            <Tooltip title="Added to WishList" placement="top">
-              <Chip label="Wish" size="small" color="error" />
-            </Tooltip>
-          )}
-          {itchListStatus && (
-            <Tooltip title="Added to ItchList" placement="top">
-              <Chip label="Itch" size="small" color="primary" />
-            </Tooltip>
-          )}
-
-          {ownListStatus && (
-            <Tooltip title="Added to OwnList" placement="top">
-              <Chip label="Own" size="small" color="warning" />
-            </Tooltip>
-          )}
-        </Stack>
-      </TableCell>
-      <TableCell align="left">
-        <Label
-          variant="ghost"
-          color={(Number(maxPlaytime) > 100 && 'warning') || (Number(maxPlaytime) > 40 && 'success') || 'primary'}
-        >
-          {`${minPlaytime} ~ ${maxPlaytime} mins`}
-        </Label>
-      </TableCell>
-      <TableCell align="left">
-        <Label
-          variant="ghost"
-          color={(Number(maxPlayers) > 10 && 'warning') || (Number(maxPlayers) > 5 && 'success') || 'primary'}
-        >
-          {`${minPlayers} ~ ${maxPlayers} people`}
-        </Label>
-      </TableCell>
-      <TableCell align="right">
         <TableMoreMenu
           open={openMenu}
           onOpen={handleOpenMenu}
@@ -158,6 +106,55 @@ export default function GameTableRow({ user, row, selected, onWishList, onOwnLis
             </>
           }
         />
+      </TableCell>
+
+      <TableCell align="left">
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Avatar variant="square" {...stringAvatar(`${title} ' '`)} alt={title} src={thumbnail} />
+          <Link
+            underline="hover"
+            variant="subtitle2"
+            component={RouterLink}
+            color="text.secondary"
+            to={`${PATH_DASHBOARD.games}/${_id}`}
+          >
+            <Typography variant="subtitle2" noWrap>
+              {title}
+            </Typography>
+          </Link>
+          {wishListStatus && (
+            <Tooltip title="Added to WishList" placement="top">
+              <Chip label="Wish" size="small" color="error" />
+            </Tooltip>
+          )}
+          {itchListStatus && (
+            <Tooltip title="Added to ItchList" placement="top">
+              <Chip label="Itch" size="small" color="primary" />
+            </Tooltip>
+          )}
+
+          {ownListStatus && (
+            <Tooltip title="Added to OwnList" placement="top">
+              <Chip label="Own" size="small" color="warning" />
+            </Tooltip>
+          )}
+        </Stack>
+      </TableCell>
+      <TableCell align="left">
+        <Label
+          variant="ghost"
+          color={(Number(maxPlaytime) > 100 && 'warning') || (Number(maxPlaytime) > 40 && 'success') || 'primary'}
+        >
+          {`${minPlaytime} ~ ${maxPlaytime} mins`}
+        </Label>
+      </TableCell>
+      <TableCell align="right">
+        <Label
+          variant="ghost"
+          color={(Number(maxPlayers) > 10 && 'warning') || (Number(maxPlayers) > 5 && 'success') || 'primary'}
+        >
+          {`${minPlayers} ~ ${maxPlayers} people`}
+        </Label>
       </TableCell>
     </TableRow>
   );

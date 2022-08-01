@@ -20,27 +20,27 @@ const navConfig = [
       {
         title: 'games',
         path: `${PATH_DASHBOARD.games}`,
-        icon: getIcon('emojione-v1:video-game'),
+        icon: getIcon('icon-park-outline:game-ps'),
       },
       {
         title: 'my itchlist',
         path: `${PATH_DASHBOARD.itchlist}`,
-        icon: getIcon('emojione-v1:shooting-star'),
+        icon: getIcon('simple-icons:googleplay'),
       },
       {
         title: 'my wishlist',
         path: `${PATH_DASHBOARD.wishlist}`,
-        icon: getIcon('emojione:heart-with-ribbon'),
+        icon: getIcon('ri:play-list-add-line'),
       },
       {
         title: 'my ownlist',
         path: `${PATH_DASHBOARD.ownlist}`,
-        icon: getIcon('emojione-v1:thumbs-down'),
+        icon: getIcon('carbon:shopping-cart-arrow-down'),
       },
       {
         title: 'lending',
         path: PATH_DASHBOARD.lending.root,
-        icon: getIcon('noto:shopping-cart'),
+        icon: getIcon('bi:share'),
         children: [
           { title: 'Loaned', path: PATH_DASHBOARD.lending.loaned },
           { title: 'Borrowed', path: PATH_DASHBOARD.lending.borrowed }

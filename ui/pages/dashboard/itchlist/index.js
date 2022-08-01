@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 // import queries
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { useTracker } from 'meteor/react-meteor-data';
-
 // @mui
 import { Container } from '@mui/material';
 

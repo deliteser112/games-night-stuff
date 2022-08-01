@@ -32,11 +32,11 @@ import { LoanedTableRow, LoanedTableToolbar } from '../../../sections/@dashboard
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
+  { id: '' },
   { id: 'title', label: 'Title', align: 'left' },
   { id: 'timeToPlay', label: 'Time to play', align: 'left' },
   { id: 'numberOfPlayers', label: 'Number of players', align: 'left' },
-  { id: 'loanedTo', label: 'Loaned To', align: 'left' },
-  { id: '' }
+  { id: 'loanedTo', label: 'Loaned To', align: 'left' }
 ];
 
 // ----------------------------------------------------------------------

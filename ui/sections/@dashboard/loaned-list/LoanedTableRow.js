@@ -35,10 +35,27 @@ export default function LoanedTableRow({ row, selected, onSelectRow, onShowRetur
 
   return (
     <TableRow hover selected={selected}>
-      <TableCell padding="checkbox">
-        <Checkbox checked={selected} onClick={onSelectRow} />
+      <TableCell align="right">
+        <TableMoreMenu
+          open={openMenu}
+          onOpen={handleOpenMenu}
+          onClose={handleCloseMenu}
+          actions={
+            <>
+              <MenuItem
+                onClick={() => {
+                  handleCloseMenu();
+                  onShowReturnModal();
+                }}
+                sx={{ color: 'warning.main' }}
+              >
+                <Iconify icon={'icon-park-outline:back'} />
+                Return this game
+              </MenuItem>
+            </>
+          }
+        />
       </TableCell>
-
       <TableCell align="left">
         <Stack direction="row" alignItems="center" spacing={1}>
           <Avatar variant="square" {...stringAvatar(`${title} ' '`)} alt={title} src={thumbnail} />
@@ -71,34 +88,13 @@ export default function LoanedTableRow({ row, selected, onSelectRow, onShowRetur
           {`${minPlayers} ~ ${maxPlayers} people`}
         </Label>
       </TableCell>
-      <TableCell align="left">
+      <TableCell align="right">
         <Stack direction="row" alignItems="center" spacing={2}>
           <Avatar {...stringAvatar(`${name.first} ${name.last}`)} style={{ color: 'white' }} />
           <Typography variant="subtitle2" noWrap>
             {`${name.first} ${name.last ? name.last : ''}`}
           </Typography>
         </Stack>
-      </TableCell>
-      <TableCell align="right">
-        <TableMoreMenu
-          open={openMenu}
-          onOpen={handleOpenMenu}
-          onClose={handleCloseMenu}
-          actions={
-            <>
-              <MenuItem
-                onClick={() => {
-                  handleCloseMenu();
-                  onShowReturnModal();
-                }}
-                sx={{ color: 'warning.main' }}
-              >
-                <Iconify icon={'icon-park-outline:back'} />
-                Return this game
-              </MenuItem>
-            </>
-          }
-        />
       </TableCell>
     </TableRow>
   );

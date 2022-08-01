@@ -292,7 +292,7 @@ export default function FriendSearchModal({ isOpen, gameId, onCloseDialog }) {
           <Dialog open={toggleOpen} onClose={handleDialogClose}>
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
               <DialogContent>
-                <DialogContentText>Please, send the invitation to him!</DialogContentText>
+                <DialogContentText>Please, send the invitation to them!</DialogContentText>
                 <Box m={2} />
                 <RHFTextField autoFocus variant="standard" margin="dense" name="emailAddress" label="Email address" />
               </DialogContent>
