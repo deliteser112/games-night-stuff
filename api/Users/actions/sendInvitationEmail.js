@@ -10,13 +10,13 @@ const getEmailOptions = (options) => {
     return {
       to: emailAddress,
       from: supportEmail,
-      subject: `Welcome, to the ${productName}!`,
-      template: 'welcome',
+      subject: `Congratulations to get the invitations!`,
+      template: 'invitation',
       templateVars: {
         title: `You have been invited!`,
-        subtitle: `You just recieved the invitation from ${user.profile.name.first} ${user.profile.name.last} of ${productName}`,
+        subtitle: `You recieved the invitation from ${user.profile.name.first} ${user.profile.name.last} of ${productName}`,
         productName,
-        firstName: '',
+        inviterName: `${user.profile.name.first} ${user.profile.name.last}`,
         welcomeUrl: Meteor.absoluteUrl('auth/login'), // e.g., returns http://localhost:3000/documents
       },
     };
