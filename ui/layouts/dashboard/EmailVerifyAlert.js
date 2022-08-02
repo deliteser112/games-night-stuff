@@ -9,15 +9,15 @@ import CheckIcon from '@mui/icons-material/Check';
 // ----------------------------------------------------------------------
 
 const APPBAR_MOBILE = 90;
-const APPBAR_DESKTOP = 45;
+const APPBAR_DESKTOP = 60;
 
 const AlertbarStyle = styled('div')(({ theme }) => ({
+  position: 'absolute',
   top: 0,
   left: 0,
   zIndex: 99,
   width: '100%',
   display: 'flex',
-  position: 'relative',
   alignItems: 'center',
   height: APPBAR_MOBILE,
   backdropFilter: 'blur(6px)',
@@ -28,7 +28,7 @@ const AlertbarStyle = styled('div')(({ theme }) => ({
   backgroundColor: `${alpha(theme.palette.primary.darker, 0.72)}`,
   [theme.breakpoints.up('md')]: {
     height: APPBAR_DESKTOP,
-    padding: theme.spacing(0, 5),
+    padding: theme.spacing(0, 7),
   },
 }));
 
@@ -91,7 +91,7 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
             {isLoading && <ReactLoading type="spin" color="grey" height={15} width={15} />}
             {isSent && <CheckIcon color="success" sx={{ width: 20, heigth: 20 }} />}
           </Stack>
-          <IconButton size="small" onClick={handleClose}>
+          <IconButton size="small" onClick={handleClose} sx={{ color: 'white' }}>
             <Icon icon="eva:close-fill" />
           </IconButton>
         </Stack>
