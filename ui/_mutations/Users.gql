@@ -78,8 +78,8 @@ mutation cancelSubscription {
   }
 }
 
-mutation setUsersUsername($username: String, $email: String) {
-  setUsersUsername(username: $username, email: $email) {
+mutation setUsersUsername($username: String) {
+  setUsersUsername(username: $username) {
     _id
   }
 }

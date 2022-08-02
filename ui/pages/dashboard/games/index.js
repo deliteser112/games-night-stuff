@@ -127,7 +127,7 @@ export default function Games() {
                 total={totalGamesCount}
                 percent={100}
                 price={1205}
-                icon="icon-park-outline:game-ps"
+                icon="fluent:board-games-20-regular"
                 color={theme.palette.info.main}
               />
               <GameAnalytic
@@ -135,7 +135,7 @@ export default function Games() {
                 total={sitchlist.length}
                 percent={getPercentByGames(totalGamesCount, sitchlist.length)}
                 price={222}
-                icon="simple-icons:googleplay"
+                icon="fluent:hand-open-heart-32-regular"
                 color={theme.palette.primary.main}
               />
               <GameAnalytic
@@ -151,7 +151,7 @@ export default function Games() {
                 total={sownlist.length}
                 percent={getPercentByGames(totalGamesCount, sownlist.length)}
                 price={42}
-                icon="carbon:shopping-cart-arrow-down"
+                icon="charm:stack"
                 color={theme.palette.warning.main}
               />
             </Stack>

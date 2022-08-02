@@ -157,7 +157,7 @@ export default function UserList({ userList, onDelete }) {
               {filteredUsers
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
-                  const { _id, name, emailAddress, emailVerified, oAuthProvider } = row;
+                  const { _id, name, emailAddress, emailVerified, oAuthProvider, username } = row;
                   const isItemSelected = selected.indexOf(emailAddress) !== -1;
 
                   return (

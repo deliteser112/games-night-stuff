@@ -153,12 +153,12 @@ const setUsersSubscriptionToFree = (_id) => {
   }
 };
 
-const setUsersUsername = (_id, username, email) => {
+const setUsersUsername = (_id, username) => {
   try {
     setUsersSubscriptionToFree(_id);
 
     return Meteor.users.update(_id, {
-      $set: { username, email },
+      $set: { username },
     });
   } catch (exception) {
     throw new Error(`[updateUser.setUsersUsername] ${exception.message}`);
@@ -424,8 +424,8 @@ export function setSubscriptionToFree(_id) {
   setUsersSubscriptionToFree(_id);
 }
 
-export function setUsername(_id, username, email) {
-  setUsersUsername(_id, username, email);
+export function setUsername(_id, username) {
+  setUsersUsername(_id, username);
 }
 
 export function addFriend(_id, friendId) {

@@ -58,7 +58,6 @@ export default function LoanedTo() {
           const gameInfo = tmpGames.find(({ _id }) => game._id === _id);
           const userInfo = tmpUsers.find(({ _id }) => game.userId === _id);
 
-          // console.log(gameInfo, userInfo, game, tmpUsers)
           const { name, _id } = userInfo;
           return { ...gameInfo, name, userId: _id };
         });

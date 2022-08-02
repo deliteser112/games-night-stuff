@@ -8,9 +8,9 @@ const normalizeGoogleData = (service) => {
       profile: {
         name: {
           first: service.given_name,
-          last: service.family_name,
-        },
-      },
+          last: service.family_name
+        }
+      }
     };
   } catch (exception) {
     throw new Error(`[normalizeMeteorUserData.normalizeGoogleData] ${exception.message}`);
@@ -23,6 +23,12 @@ const normalizeGithubData = (service) => {
       service: 'github',
       emails: [{ address: service.email }],
       username: service.username,
+      profile: {
+        name: {
+          first: service.username,
+          last: ''
+        }
+      }
     };
   } catch (exception) {
     throw new Error(`[normalizeMeteorUserData.normalizeGithubData] ${exception.message}`);
@@ -37,9 +43,9 @@ const normalizeFacebookData = (service) => {
       profile: {
         name: {
           first: service.first_name,
-          last: service.last_name,
-        },
-      },
+          last: service.last_name
+        }
+      }
     };
   } catch (exception) {
     throw new Error(`[normalizeMeteorUserData.normalizeFacebookData] ${exception.message}`);
@@ -60,7 +66,20 @@ const normalizeOAuthUserData = (services) => {
 const getNormalizedMeteorUserData = (isOAuthUser, user) => {
   try {
     return isOAuthUser
-      ? { _id: user._id, ...normalizeOAuthUserData(user.services), settings: user.settings }
+      ? {
+          _id: user._id,
+          ...normalizeOAuthUserData(user.services),
+          settings: user.settings,
+          wishlist: user.wishlist,
+          itchlist: user.itchlist,
+          ownlist: user.ownlist,
+          friends: user.friends,
+          loanedTo: user.loanedTo,
+          borrowedFrom: user.borrowedFrom,
+          subscription: user.subscription,
+          gamePlayCounts: user.gamePlayCounts,
+          username: user.username
+        }
       : { service: 'password', ...user };
   } catch (exception) {
     throw new Error(`[normalizeMeteorUserData.getNormalizedMeteorUserData] ${exception.message}`);

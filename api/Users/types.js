@@ -43,6 +43,7 @@ export default `
   
   input UserInput {
     _id: String,
+    username: String,
     email: String,
     password: String,
     profile: ProfileInput,

@@ -59,7 +59,7 @@ export default function ItchList() {
 
   useEffect(() => {
     if (tmpUser) {
-      const tmpName = tmpUser.name.first || '';
+      const tmpName = tmpUser.name && tmpUser.name.first || '';
       setUserName(tmpName);
 
       const { itchlist } = tmpUser;

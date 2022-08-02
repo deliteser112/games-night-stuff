@@ -118,7 +118,7 @@ export default {
   setUsersUsername: async (root, args, context) => {
     if (!context.user) throw new Error('Sorry, you must be logged in to unsubscribe a game from your ownlist');
 
-    setUsername(context.user._id, args.username, args.email);
+    setUsername(context.user._id, args.username);
 
     return queryUser({ userIdToQuery: context.user._id });
   },

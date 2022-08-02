@@ -20,12 +20,12 @@ const navConfig = [
       {
         title: 'games',
         path: `${PATH_DASHBOARD.games}`,
-        icon: getIcon('icon-park-outline:game-ps'),
+        icon: getIcon('fluent:board-games-20-regular'),
       },
       {
         title: 'my itchlist',
         path: `${PATH_DASHBOARD.itchlist}`,
-        icon: getIcon('simple-icons:googleplay'),
+        icon: getIcon('fluent:hand-open-heart-32-regular'),
       },
       {
         title: 'my wishlist',
@@ -35,7 +35,7 @@ const navConfig = [
       {
         title: 'my ownlist',
         path: `${PATH_DASHBOARD.ownlist}`,
-        icon: getIcon('carbon:shopping-cart-arrow-down'),
+        icon: getIcon('charm:stack'),
       },
       {
         title: 'lending',

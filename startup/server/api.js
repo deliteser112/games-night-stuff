@@ -88,7 +88,7 @@ const schema = {
       ): Subscriber
 
       cancelSubscription: User
-      setUsersUsername(username: String, email: String): User
+      setUsersUsername(username: String): User
       addFriend(_id: String): User
       removeFriend(_id: String): User
       loanGameToUser(boardGameId: String, userIdToLoanTo: String): User

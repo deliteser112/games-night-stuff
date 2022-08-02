@@ -191,7 +191,7 @@ export default function GameDetails() {
               to={PATH_DASHBOARD.games}
               startIcon={<Iconify icon={'icon-park-outline:back'} />}
             >
-              Back to List
+              Back
             </Button>
           }
         />
