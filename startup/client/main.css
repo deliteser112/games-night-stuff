@@ -6,4 +6,16 @@ body {
   margin: auto;
   margin-top: 100px;
   margin-bottom: 100px;
-} 
+}
+
+.title-effect {
+  background: linear-gradient(92.94deg, #3ffbdc 4.54%, #e1b559 93.54%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* 92.94deg, #3ffbdc 4.54%, #e1b559 93.54% */
+/* backgroundImage:
+    'linear-gradient(270.97deg,#ffe580 -21.36%,#ff7571 -2.45%,#ea5dad 26.84%,#c2a0fd 64.15%,#3bf0e4 108.29%,#b2f4b6 159.03%)',
+  '-webkitTextFillColor': 'transparent',
+  '-webkitBackgroundClip': 'text' */

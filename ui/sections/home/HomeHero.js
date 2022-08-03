@@ -69,12 +69,9 @@ export default function HomeHero() {
                 <Typography
                   component="span"
                   variant="h1"
+                  className="title-effect"
                   sx={{
-                    color: 'primary.main',
-                    backgroundImage:
-                      'linear-gradient(270.97deg,#ffe580 -21.36%,#ff7571 -2.45%,#ea5dad 26.84%,#c2a0fd 64.15%,#3bf0e4 108.29%,#b2f4b6 159.03%)',
-                    '-webkitTextFillColor': 'transparent',
-                    '-webkitBackgroundClip': 'text'
+                    color: 'primary.main'
                   }}
                 >
                   GamesNight
